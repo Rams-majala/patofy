@@ -81,6 +81,14 @@ class SignUpScreen extends StatelessWidget {
               ),
               
               const SizedBox(height: 10.0),
+              Row(
+                children: [
+                  Checkbox(value: false, onChanged: (value) {}),
+                  const Text('I agree to the terms and conditions'),
+                ],
+              ),
+              
+              const SizedBox(height: 10.0),
               SizedBox(
                 width: double.infinity,
                 height: 50.0,
@@ -117,12 +125,7 @@ class SignUpScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 5),
-              Row(
-                children: [
-                  Checkbox(value: false, onChanged: (value) {}),
-                  const Text('I agree to the terms and conditions'),
-                ],
-              ),
+              
               
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
