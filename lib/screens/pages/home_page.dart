@@ -108,21 +108,21 @@ class _HomePageState extends State<HomePage> {
                     height: 90,
                     width: 170,
                     child: Container(
-                      color: Styles.primaryBlueColor,
+                    
                       child: Column(
                         children: [
                           Center(
                             child: Text(
                               "Actual Expenses",
                               style: TextStyle(
-                                  color: Styles.primaryWhiteColor,
+                                  color: Styles.primaryRedColor,
                                   fontWeight: FontWeight.w800,
                                   fontSize: 16),
                             ),
                           ),
                           Divider(
                             height: 16,
-                            color: Styles.primaryWhiteColor,
+                            color: Styles.primaryRedColor,
                           ),
                           Row(
                             children: [
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                                 child: Text(
                                   "Tsh.78,960/=",
                                   style: TextStyle(
-                                      color: Styles.primaryWhiteColor,
+                                      color: Styles.primaryRedColor,
                                       fontWeight: FontWeight.w800,
                                       fontSize: 16),
                                 ),
@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                               Icon(
                                 Icons.money_off,
                                 size: 40,
-                                color: Styles.primaryWhiteColor,
+                                color: Styles.primaryRedColor,
                               )
                             ],
                           )
@@ -152,21 +152,21 @@ class _HomePageState extends State<HomePage> {
                     height: 90,
                     width: 170,
                     child: Container(
-                      color: Styles.primaryGreenColor,
+                      
                       child: Column(
                         children: [
                           Center(
                             child: Text(
                               "Actual Icome",
                               style: TextStyle(
-                                  color: Styles.primaryWhiteColor,
+                                  color: Styles.primaryRedColor,
                                   fontWeight: FontWeight.w800,
                                   fontSize: 16),
                             ),
                           ),
                           Divider(
                             height: 16,
-                            color: Styles.primaryWhiteColor,
+                            color: Styles.primaryRedColor,
                           ),
                           Row(
                             children: [
@@ -177,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                                 child: Text(
                                   "Tsh.68,960/=",
                                   style: TextStyle(
-                                      color: Styles.primaryWhiteColor,
+                                      color: Styles.primaryRedColor,
                                       fontWeight: FontWeight.w800,
                                       fontSize: 16),
                                 ),
@@ -185,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                               Icon(
                                 Icons.money,
                                 size: 40,
-                                color: Styles.primaryWhiteColor,
+                                color: Styles.primaryRedColor,
                               )
                             ],
                           )
@@ -195,17 +195,17 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: SizedBox(
-                  height: 90,
-                  child: Container(
-                    color: Styles.primaryRedColor,
+              // const SizedBox(height: 10),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              //   child: SizedBox(
+              //     height: 90,
+              //     child: Container(
+              //       color: Styles.primaryBlackColor.withOpacity(0.4),
 
-                  ),
-                ),
-              ),
+              //     ),
+              //   ),
+              // ),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -213,7 +213,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Recent Transactions"),
+                    const Text("Recent Transactions"),
                     TextButton(onPressed: () {}, child: Text("View All"))
                   ],
                 ),

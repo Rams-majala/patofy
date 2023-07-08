@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:patofy/screens/pages/add_expenses.dart';
+import 'package:patofy/screens/pages/barchart.dart';
 import 'package:patofy/screens/pages/budget_screen.dart';
 import 'package:patofy/screens/pages/home_page.dart';
+import 'package:patofy/screens/pages/linechart.dart';
+import 'package:patofy/screens/pages/piecharts.dart';
 import 'package:patofy/screens/pages/settings_page.dart';
 
 import '../constants/colors.dart';
+import '../widgets/custom_navigation_bar.dart';
+import '../widgets/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -81,6 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 PopupMenuItem(child: Text("Choose Chart",textAlign:TextAlign.center,style: TextStyle(color: Styles.primaryBlackColor,fontWeight: FontWeight.w800,fontSize: 18),)),
                  PopupMenuItem(
                   child: InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=>PieChartPage()));
+                    },
                     child: Row(
                       
                       children: [
@@ -93,6 +101,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                    PopupMenuItem(
                   child: InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=>BarChartPage()));
+                    },
                     child: Row(
                       children: [
                         Icon(Icons.bar_chart,color: Styles.primaryRedColor,),
@@ -104,6 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   PopupMenuItem(
                   child: InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=>LineChartPage()));
+                    },
                     child: Row(
                       children: [
                         Icon(Icons.table_chart,color: Styles.primaryRedColor,),
@@ -122,128 +136,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      drawer: Drawer(
-        width: MediaQuery.of(context).size.width * 0.7,
-        shadowColor: Styles.primaryWhiteColor,
-        elevation: 0,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text(
-                'luciano dev',
-                style: TextStyle(color: Styles.primaryRedColor),
-              ), // Replace with the user's name
-              accountEmail: Text(
-                'lucinaodev@gmail.com',
-                style: TextStyle(color: Styles.primaryRedColor),
-              ), // Replace with the user's email
-              currentAccountPicture: const CircleAvatar(
-                backgroundImage: AssetImage(
-                  'assets/images/logo.png',
-                  // Replace with the URL of the user's avatar
-                ),
-                radius: 10,
-              ),
-              decoration: BoxDecoration(
-                color: Styles
-                    .primaryWhiteColor, // Set the header background color to red
-              ),
-              otherAccountsPictures: [
-                IconButton(
-                  icon: Icon(
-                    Icons.edit,
-                    color: Styles.primaryRedColor,
-                  ),
-                  onPressed: () {
-                    // Perform action for edit button
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 9,
-            ),
-            Text(
-              "Choose Duration",
-              style: TextStyle(color: Styles.primaryBlackColor),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ListTile(
-                    leading: Icon(Icons.calendar_view_day),
-                    title: Text('Day'),
-                    // Replace with the user's phone number
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.calendar_view_week),
-                    title: Text('Week'),
-                    // Replace with the user's email address
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.calendar_view_month),
-                    title: Text('Month'),
-                    // Replace with the user's email address
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.calendar_month),
-                    title: Text('Year'),
-                    // Replace with the user's email address
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.view_week),
-                    title: Text('All'),
-                    // Replace with the user's email address
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.select_all),
-                    title: Text('Choose Date'),
-                    // Replace with the user's email address
-                  ),
-                ],
-              ),
-            )
-            // Add more ListTiles for additional content in the drawer
-          ],
-        ),
-      ),
+      drawer:const DrawerWidget(),
        body: Center(
         child: _buildCurrentScreen(),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar:  CustomBottomNavigationBar(
         currentIndex: _currentIndex,
-        selectedIconTheme: IconThemeData(color: Styles.primaryRedColor),
-        unselectedIconTheme: IconThemeData(color: Styles.primaryBlackColor),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        onTap: _onTabTapped,
-        items:const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.select_all),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Seetings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'Add',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.edit_note),
-            label: 'Add Expense',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.logout),
-            label: 'Logout',
-          ),
-        ],
+        onTabTapped: _onTabTapped,
       ),
+      
+      
     );
   }
   Widget _buildCurrentScreen() {
@@ -260,11 +162,8 @@ class _HomeScreenState extends State<HomeScreen> {
       case 3:
         // Add Expense screen
         return const ExpensePage();
-      case 4:
-        // Logout screen
-        return _buildLogoutScreen();
       default:
-        return const Text('Invalid Screen');
+        return const Text('Error occured');
     }
   }
 
@@ -302,7 +201,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     ),
   );
+  }
 }
-}
+
+
 
 
