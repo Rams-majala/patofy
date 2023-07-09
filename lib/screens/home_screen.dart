@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  PopupMenuItem(
                   child: InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=>PieChartPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=>const PieChartPage()));
                     },
                     child: Row(
                       
@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                    PopupMenuItem(
                   child: InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=>BarChartPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=>const BarChartPage()));
                     },
                     child: Row(
                       children: [
@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   PopupMenuItem(
                   child: InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=>LineChartPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (_)=>const LineChartPage()));
                     },
                     child: Row(
                       children: [
@@ -167,41 +167,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget _buildLogoutScreen() {
-  return Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(Icons.exit_to_app, size: 80,color: Styles.primaryRedColor,),
-        const SizedBox(height: 16),
-        Text(
-          'Are you sure you want \nto leave Patofy App',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18,color: Styles.primaryBlackColor),
-        ),
-        const SizedBox(height: 32),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              child: Text('No',style: TextStyle(color: Styles.primaryRedColor),),
-              onPressed: () {
-                // Handle logout action
-              },
-            ),
-            const SizedBox(width: 16),
-            ElevatedButton(
-              child: Text('Yes',style: TextStyle(color: Styles.primaryGreenColor),),
-              onPressed: () {
-                // Handle logout action
-              },
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-  }
 }
 
 

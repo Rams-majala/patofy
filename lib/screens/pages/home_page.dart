@@ -3,6 +3,9 @@ import 'package:patofy/constants/colors.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
+import '../../widgets/expenses.dart';
+import '../../widgets/income.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -10,216 +13,109 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
   TextEditingController dateController1 = TextEditingController();
   TextEditingController dateController2 = TextEditingController();
-  final DateFormat _dateFormatter = DateFormat('yyyy-MM-dd');
 
-  List<String> dropdownItems = [
-    'This Week',
-    'This Month',
-    'Last month',
-  ];
-  String? selectedDropdownItem;
+DateTime startDate = DateTime.now().add(const Duration(days: 30));
 
-  Future<void> _selectDate1(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-    if (picked != null) {
-      setState(() {
-        dateController1.text = _dateFormatter.format(picked);
-      });
-    }
-  }
 
-  Future<void> _selectDate2(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-    if (picked != null) {
-      setState(() {
-        dateController2.text = _dateFormatter.format(picked);
-      });
-    }
+final DateFormat _dateFormatter = DateFormat('MMM , yyyy');
+
+
+
+  late TabController _tabController;
+
+
+
+   @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this,);
   }
 
   @override
   void dispose() {
-    dateController1.dispose();
-    dateController2.dispose();
+    // dateController1.dispose();
+    // dateController2.dispose();
+     _tabController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Styles.primaryWhiteColor,
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //add drop down select
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SizedBox(
-                  width: 110,
-                  child: InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: 'Select Duration',
-                      labelStyle: TextStyle(color: Styles.primaryRedColor),
-                      border: InputBorder.none,
-                    ),
-                    child: DropdownButtonFormField<String>(
-                      alignment: AlignmentDirectional.centerStart,
-                      icon: Icon(
-                        Icons.arrow_drop_down_circle,
-                      ),
-                      value: selectedDropdownItem,
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedDropdownItem = newValue;
-                        });
-                      },
-                      items: dropdownItems.map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(color: Styles.primaryBlackColor),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 90,
-                    width: 170,
-                    child: Container(
-                    
-                      child: Column(
-                        children: [
-                          Center(
-                            child: Text(
-                              "Actual Expenses",
-                              style: TextStyle(
-                                  color: Styles.primaryRedColor,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 16),
-                            ),
-                          ),
-                          Divider(
-                            height: 16,
-                            color: Styles.primaryRedColor,
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8),
-                                //replace the value here with real data from the user
-                                child: Text(
-                                  "Tsh.78,960/=",
-                                  style: TextStyle(
-                                      color: Styles.primaryRedColor,
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 16),
-                                ),
-                              ),
-                              Icon(
-                                Icons.money_off,
-                                size: 40,
-                                color: Styles.primaryRedColor,
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 90,
-                    width: 170,
-                    child: Container(
-                      
-                      child: Column(
-                        children: [
-                          Center(
-                            child: Text(
-                              "Actual Icome",
-                              style: TextStyle(
-                                  color: Styles.primaryRedColor,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 16),
-                            ),
-                          ),
-                          Divider(
-                            height: 16,
-                            color: Styles.primaryRedColor,
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(8),
-
-                                //replace the value here with real data from the user
-                                child: Text(
-                                  "Tsh.68,960/=",
-                                  style: TextStyle(
-                                      color: Styles.primaryRedColor,
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 16),
-                                ),
-                              ),
-                              Icon(
-                                Icons.money,
-                                size: 40,
-                                color: Styles.primaryRedColor,
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              // const SizedBox(height: 10),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              //   child: SizedBox(
-              //     height: 90,
-              //     child: Container(
-              //       color: Styles.primaryBlackColor.withOpacity(0.4),
-
-              //     ),
-              //   ),
-              // ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text("Recent Transactions"),
-                    TextButton(onPressed: () {}, child: Text("View All"))
-                  ],
-                ),
-              )
-            ],
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          backgroundColor: Styles.primaryWhiteColor,
+          //abb bar design
+          appBar: AppBar(
+            title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          IconButton(
+            onPressed: () {
+              // Handle previous date range
+              setState(() {
+      startDate = startDate.subtract(const Duration(days: 30)); // Subtract 7 days from the start date
+     // Subtract 7 days from the end date
+    });
+            },
+            icon: const Icon(Icons.arrow_back_ios),
+            color: Styles.primaryBlackColor,
           ),
-        ));
+          Padding(
+            padding: const EdgeInsets.only(top:14.0),
+            child: Text(
+            " ${_dateFormatter.format(startDate)}",
+            style: TextStyle(
+              color: Styles.primaryRedColor,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          ),
+          IconButton(
+            onPressed: () {
+              // Handle next date range
+              setState(() {
+    // Add 7 days to the start date
+      startDate = startDate.add(const Duration(days: 30)); // Add 7 days to the end date
+    });
+            },
+            icon: const Icon(Icons.arrow_forward_ios),
+            color: Styles.primaryBlackColor,
+          ),
+        ],
+      ),
+            centerTitle: false,
+            backgroundColor: Styles.primaryWhiteColor,
+            iconTheme: IconThemeData(color: Styles.primaryWhiteColor),
+            bottom: TabBar(
+              isScrollable: false,
+              indicatorColor: Styles.primaryRedColor,
+              labelColor: Styles.primaryRedColor,
+              unselectedLabelColor: Styles.primaryBlackColor,
+              tabs: const [
+                Tab(text: 'Expenses'),
+                Tab(text: 'Income')
+              ]
+            
+            ),
+          ),
+          body: const TabBarView(
+            
+            children: [ ExpensesTab(), IncomeTab()],
+          ),
+          ),
+    );
+        
   }
 }
+
+
+
+
+
+  

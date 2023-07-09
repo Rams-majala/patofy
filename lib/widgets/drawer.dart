@@ -110,67 +110,85 @@ class DrawerWidget extends StatelessWidget {
     );
   }
 
-
+//Export Dialog Modal
 void _showExportDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Center(child: Text('Choose the format you need to export data',style: TextStyle(
-            color: Styles.primaryRedColor
-          ),)),
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: Text('PDF'),
+    showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+    ),
+    builder: (BuildContext context) {
+      return Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text(
+              'Export Data',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text('EXCEL'),
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Text('CSV'),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
             ),
+            const SizedBox(height: 16.0),
+            ElevatedButton.icon(
+              onPressed: () {
+                // Handle share via email action
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.picture_as_pdf_sharp,color: Styles.primaryRedColor,),
+              label: Text('Export to Pdf',style:TextStyle(color: Styles.primaryBlackColor)),
+            ),
+            const SizedBox(height: 12.0),
+            ElevatedButton.icon(
+              onPressed: () {
+                // Handle share via whatsap action
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.file_copy,color: Styles.primaryRedColor,),
+              label: Text('Export to Excel',style:TextStyle(color: Styles.primaryBlackColor)),
+            ),
+            const SizedBox(height: 12.0),
+            ElevatedButton.icon(
+              onPressed: () {
+                // Handle share via bluetooth action
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.file_present,color: Styles.primaryRedColor,),
+              label: Text('Export to Csv',style:TextStyle(color: Styles.primaryBlackColor)),
+            ),
+            
+            
           ],
-        );
-      },
-    );
+        ),
+      );
+    },
+  );
   }
 
 //share dialog
 void _showShareDialog(BuildContext context) {
   showModalBottomSheet(
     context: context,
-    shape: RoundedRectangleBorder(
+    shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
     ),
     builder: (BuildContext context) {
       return Container(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
+            const Text(
               'Share via',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton.icon(
               onPressed: () {
                 // Handle share via email action
@@ -179,7 +197,7 @@ void _showShareDialog(BuildContext context) {
               icon: Icon(Icons.email,color: Styles.primaryRedColor,),
               label: Text('Email',style:TextStyle(color: Styles.primaryBlackColor)),
             ),
-            SizedBox(height: 12.0),
+            const SizedBox(height: 12.0),
             ElevatedButton.icon(
               onPressed: () {
                 // Handle share via whatsap action
@@ -188,7 +206,7 @@ void _showShareDialog(BuildContext context) {
               icon: Icon(Icons.share_rounded,color: Styles.primaryRedColor,),
               label: Text('Whatsapp',style:TextStyle(color: Styles.primaryBlackColor)),
             ),
-            SizedBox(height: 12.0),
+            const SizedBox(height: 12.0),
             ElevatedButton.icon(
               onPressed: () {
                 // Handle share via bluetooth action
@@ -197,7 +215,7 @@ void _showShareDialog(BuildContext context) {
               icon: Icon(Icons.bluetooth,color: Styles.primaryRedColor,),
               label: Text('Bluetooth',style:TextStyle(color: Styles.primaryBlackColor)),
             ),
-            SizedBox(height: 12.0),
+            const SizedBox(height: 12.0),
             ElevatedButton.icon(
               onPressed: () {
                 // Handle share via google drive  action
@@ -206,7 +224,7 @@ void _showShareDialog(BuildContext context) {
               icon: Icon(Icons.add_to_drive,color: Styles.primaryRedColor,),
               label: Text('Drive',style:TextStyle(color: Styles.primaryBlackColor)),
             ),
-            SizedBox(height: 12.0),
+            const SizedBox(height: 12.0),
             ElevatedButton.icon(
               onPressed: () {
                 // Handle share via print media action

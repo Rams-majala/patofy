@@ -3,7 +3,6 @@ import 'package:pie_chart/pie_chart.dart';
 
 import '../../constants/colors.dart';
 import '../../model/charts_model.dart';
-import '../home_screen.dart';
 
 class PieChartPage extends StatefulWidget {
   const PieChartPage({Key? key}) : super(key: key);
@@ -36,22 +35,22 @@ class _PieChartPageState extends State<PieChartPage> {
         ],
       ),
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.9,
           height: MediaQuery.of(context).size.height * 0.9,
 
           child: PieChart(
             dataMap: pieChartData,
-            animationDuration: Duration(milliseconds: 500),
+            animationDuration: const Duration(milliseconds: 500),
             chartLegendSpacing: 32.0,
             chartRadius: null,
             
-            colorList: [
+            colorList: const [
               Colors.blue,
               Colors.green,
               Colors.orange,
             ],
-            legendOptions: LegendOptions(
+            legendOptions: const LegendOptions(
               showLegendsInRow: true,
               legendPosition: LegendPosition.bottom,
               showLegends: true,
