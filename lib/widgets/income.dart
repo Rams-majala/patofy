@@ -45,7 +45,7 @@ class IncomeTab extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Column(
-                              children: [Text("Actual"), Text("Tsh.7,894,049")],
+                              children: [Text("Actual"), Text("empty")],
                             ),
                             const SizedBox(
                               width: 19,
@@ -58,7 +58,7 @@ class IncomeTab extends StatelessWidget {
                                       color: Styles.primaryGreenColor),
                                 ),
                                 Text(
-                                  "Tsh.7,894,049",
+                                  "empty",
                                   style: TextStyle(
                                       color: Styles.primaryGreenColor),
                                 )

@@ -45,7 +45,7 @@ class ExpensesTab extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Column(
-                              children: [Text("Actual"), Text("Tsh.7,894,049")],
+                              children: [Text("Actual"), Text("empty")],
                             ),
                             const SizedBox(
                               width: 19,
@@ -58,7 +58,7 @@ class ExpensesTab extends StatelessWidget {
                                       color: Styles.primaryGreenColor),
                                 ),
                                 Text(
-                                  "Tsh.7,894,049",
+                                  "empty",
                                   style: TextStyle(
                                       color: Styles.primaryGreenColor),
                                 )
@@ -88,39 +88,28 @@ class ExpensesTab extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 18, top: 9),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.7,
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                itemCount: 4,
-                itemBuilder: (context,index){
-                return Container(
-                  padding: const EdgeInsets.only(top: 8),
-                  height: 50,
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 40,
-                        
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Styles.primaryBlackColor,
-                        ),
-                      ),
-                      const Text("Clothes"),
-                      const Text("-8000"),
-                      const Icon(Icons.currency_exchange_sharp)
-                    ],
+          //no data here
+                    Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Icon(
+                  Icons.delete_outline,
+                  size: 64,
+                  color: Colors.grey,
+                ),
+                SizedBox(height: 8),
+                Text(
+                  "No recent Expenses",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey,
                   ),
-                );
-              }),
+                ),
+              ],
             ),
-          )
+          ),
         ],
       ),
     );
