@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:patofy/screens/pages/add_expenses.dart';
+import 'package:patofy/screens/pages/budgeted_expenses.dart';
 import 'package:patofy/screens/pages/barchart.dart';
-import 'package:patofy/screens/pages/budget_screen.dart';
+import 'package:patofy/screens/pages/budgeted_income.dart';
 import 'package:patofy/screens/pages/home_page.dart';
 import 'package:patofy/screens/pages/linechart.dart';
 import 'package:patofy/screens/pages/piecharts.dart';

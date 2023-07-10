@@ -22,28 +22,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool _agreeToTerms = false;
 
-  void _signup() {
-    final String firstName = _firstNameController.text;
-    final String lastName = _lastNameController.text;
-    final String email = _emailController.text;
-    final String password = _passwordController.text;
-    final String confirmPassword = _confirmPasswordController.text;
+  // void _signup() {
+  //   final String firstName = _firstNameController.text;
+  //   final String lastName = _lastNameController.text;
+  //   final String email = _emailController.text;
+  //   final String password = _passwordController.text;
+  //   final String confirmPassword = _confirmPasswordController.text;
 
-    // Perform validation here
-    if (!_agreeToTerms) {
-      // Show error message or handle validation failure
-      return;
-    }
+  //   // Perform validation here
+  //   if (!_agreeToTerms) {
+  //     // Show error message or handle validation failure
+  //     return;
+  //   }
 
-    if (password != confirmPassword) {
-      // Show error message or handle validation failure
-      return;
-    }
+  //   if (password != confirmPassword) {
+  //     // Show error message or handle validation failure
+  //     return;
+  //   }
 
-    // Handle signup button press
-    // Call the signup method in your authentication controller
-    // with the provided user information
-  }
+  //   // Handle signup button press
+  //   // Call the signup method in your authentication controller
+  //   // with the provided user information
+  // }
 
   @override
   void dispose() {
@@ -153,7 +153,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: double.infinity,
                 height: 50.0,
                 child: ElevatedButton(
-                  onPressed: _signup,
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (_)=>const SignInScreen()));
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Styles.primaryRedColor,
                     // Set your desired button color here
