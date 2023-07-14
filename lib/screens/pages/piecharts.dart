@@ -16,24 +16,11 @@ class _PieChartPageState extends State<PieChartPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, double> pieChartData = chartModel.generatePieChart().map((key, value) => MapEntry(key, value.toDouble()));
+    final Map<String, double> pieChartData =
+     chartModel.generatePieChart().map((key, value) => MapEntry(key, value.toDouble()));
 
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Styles.primaryWhiteColor),
-        backgroundColor: Styles.primaryRedColor,
-        elevation: 0,
-        title: Text(
-          "Pie Chart",
-          style: TextStyle(color: Styles.primaryWhiteColor),
-        ),
-        actions: [
-          Icon(
-            Icons.more_vert,
-            color: Styles.primaryWhiteColor,
-          )
-        ],
-      ),
+      
       body: Center(
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.9,

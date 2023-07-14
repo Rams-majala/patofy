@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:patofy/screens/pages/budgeted_expenses.dart';
+import 'package:patofy/screens/pages/analysis.dart';
 import 'package:patofy/screens/pages/barchart.dart';
 import 'package:patofy/screens/pages/budgeted_income.dart';
 import 'package:patofy/screens/pages/home_page.dart';
@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Center(
               child: Image.asset(
@@ -76,65 +76,65 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           ],
         ),
-        actions: <Widget>[
-          PopupMenuButton(
-            elevation: 4,
-            shadowColor: Styles.primaryRedColor,
-            color: Styles.primaryWhiteColor,
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem(child: Text("Choose Chart",textAlign:TextAlign.center,style: TextStyle(color: Styles.primaryBlackColor,fontWeight: FontWeight.w800,fontSize: 18),)),
-                 PopupMenuItem(
-                  child: InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=>const PieChartPage()));
-                    },
-                    child: Row(
+        // actions: <Widget>[
+        //   PopupMenuButton(
+        //     elevation: 4,
+        //     shadowColor: Styles.primaryRedColor,
+        //     color: Styles.primaryWhiteColor,
+        //     itemBuilder: (BuildContext context) {
+        //       return [
+        //         PopupMenuItem(child: Text("Choose Chart",textAlign:TextAlign.center,style: TextStyle(color: Styles.primaryBlackColor,fontWeight: FontWeight.w800,fontSize: 18),)),
+        //          PopupMenuItem(
+        //           child: InkWell(
+        //             onTap: (){
+        //               Navigator.push(context, MaterialPageRoute(builder: (_)=>const PieChartPage()));
+        //             },
+        //             child: Row(
                       
-                      children: [
-                        Icon(Icons.pie_chart,color: Styles.primaryRedColor,),
-                       const SizedBox(width: 5,),
-                        const Text("Pie",),
-                      ],
-                    ),
-                  )
-                  ),
-                   PopupMenuItem(
-                  child: InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=>const BarChartPage()));
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.bar_chart,color: Styles.primaryRedColor,),
-                        const SizedBox(width: 5,),
-                        const Text("Column",),
-                      ],
-                    ),
-                  )
-                  ),
-                  PopupMenuItem(
-                  child: InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=>const LineChartPage()));
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.table_chart,color: Styles.primaryRedColor,),
-                        const SizedBox(width: 5,),
-                        const Text("Line Chart",),
-                      ],
-                    ),
-                  )
-                  ),
-                  ];
-            },
-            icon: Icon(
-              Icons.more_vert,
-              color: Styles.primaryRedColor,
-            ),
-          ),
-        ],
+        //               children: [
+        //                 Icon(Icons.pie_chart,color: Styles.primaryRedColor,),
+        //                const SizedBox(width: 5,),
+        //                 const Text("Pie",),
+        //               ],
+        //             ),
+        //           )
+        //           ),
+        //            PopupMenuItem(
+        //           child: InkWell(
+        //             onTap: (){
+        //               Navigator.push(context, MaterialPageRoute(builder: (_)=>const BarChartPage()));
+        //             },
+        //             child: Row(
+        //               children: [
+        //                 Icon(Icons.bar_chart,color: Styles.primaryRedColor,),
+        //                 const SizedBox(width: 5,),
+        //                 const Text("Column",),
+        //               ],
+        //             ),
+        //           )
+        //           ),
+        //           PopupMenuItem(
+        //           child: InkWell(
+        //             onTap: (){
+        //               Navigator.push(context, MaterialPageRoute(builder: (_)=>const LineChartPage()));
+        //             },
+        //             child: Row(
+        //               children: [
+        //                 Icon(Icons.table_chart,color: Styles.primaryRedColor,),
+        //                 const SizedBox(width: 5,),
+        //                 const Text("Line Chart",),
+        //               ],
+        //             ),
+        //           )
+        //           ),
+        //           ];
+        //     },
+        //     icon: Icon(
+        //       Icons.more_vert,
+        //       color: Styles.primaryRedColor,
+        //     ),
+        //   ),
+        // ],
       ),
       drawer:const DrawerWidget(),
        body: Center(
@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return const BudgetPage();
       case 3:
         // Add Expense screen
-        return const ExpensePage();
+        return const AnalysisPage();
       default:
         return const Text('Error occured');
     }

@@ -12,14 +12,8 @@ class _LineChartPageState extends State<LineChartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Styles.primaryRedColor,
-        iconTheme: IconThemeData(color: Styles.primaryWhiteColor),
-        elevation: 0,
-        title: Text("Line Chart",style: TextStyle(color: Styles.primaryWhiteColor),),
-        actions:const[
-          Icon(Icons.more_vert)
-        ],
+      body: Center(
+        child: Text("No data"),
       ),
     );
   }

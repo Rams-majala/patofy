@@ -18,24 +18,26 @@ class CustomBottomNavigationBar extends StatelessWidget {
       currentIndex: currentIndex,
       selectedIconTheme: IconThemeData(color: Styles.primaryRedColor),
       unselectedIconTheme: IconThemeData(color: Styles.primaryBlackColor),
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
+      showSelectedLabels: true,
+      selectedLabelStyle: TextStyle(color: Styles.primaryRedColor),
+      showUnselectedLabels: true,
+      unselectedLabelStyle: TextStyle(color: Styles.primaryBlackColor),
       onTap: onTabTapped,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.select_all),
-          label: 'Home',
+          label: 'Settings',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          label: 'Seetings',
+          label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.add),
-          label: 'Add',
+          icon: Icon(Icons.wallet),
+          label: 'budget',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.edit_note),
+          icon: Icon(Icons.analytics_sharp),
           label: 'Add Expense',
         ),
       ],

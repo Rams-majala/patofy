@@ -15,7 +15,7 @@ class ExpensesTab extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 8.0),
+                padding: const EdgeInsets.only(top: 8.0,left: 18.0,),
                 child: Container(
                   color: Styles.primaryRedColor.withOpacity(0.2),
                   height: 90,
@@ -25,7 +25,7 @@ class ExpensesTab extends StatelessWidget {
                       Container(
                         height: MediaQuery.of(context).size.height,
                         width: 90,
-                        color: Styles.primaryWhiteColor.withOpacity(0.5),
+                        color: Styles.primaryWhiteColor.withOpacity(0.2),
                         child: Icon(
                           Icons.attach_money,
                           color: Styles.primaryRedColor,
@@ -41,10 +41,9 @@ class ExpensesTab extends StatelessWidget {
                               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                           Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 const Column(
                                   children: [Text("Actual"), Text("empty")],
@@ -66,7 +65,7 @@ class ExpensesTab extends StatelessWidget {
                                 )
                               ],
                             ),
-                          )
+                          
                         ],
                       )
                     ],
@@ -75,21 +74,69 @@ class ExpensesTab extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 18.0, top: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Recent Expenses",
-                      style: TextStyle(
-                          color: Styles.primaryBlackColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800),
-                    ),
-                  ],
+                child: Container(
+                  color: Styles.primaryRedColor.withOpacity(0.2),
+                  height: 150,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: 90,
+                        color: Styles.primaryWhiteColor.withOpacity(0.2),
+                        child: Icon(
+                          Icons.attach_money,
+                          color: Styles.primaryRedColor,
+                          size: 90,
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                            child: Text(
+                              "Difference",
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Column(
+                                  children: [Text("Budgeted Expenses"), Text("empty")],
+                                ),
+                                 const Icon(Icons.remove),
+                                Column(
+                                  children: [
+                                    Text(
+                                      "Actual Expenses",
+                                      style: TextStyle(color: Styles.primaryGreenColor),
+                                    ),
+                                    Text(
+                                      "empty",
+                                      style: TextStyle(color: Styles.primaryGreenColor),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.all(18),
+                            child: Center(
+                              child: Text("Total  Expenses  = "),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   children: [
                     Icon(

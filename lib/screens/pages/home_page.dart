@@ -17,10 +17,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   TextEditingController dateController1 = TextEditingController();
   TextEditingController dateController2 = TextEditingController();
 
-DateTime startDate = DateTime.now().add(const Duration(days: 30));
+DateTime startDate = DateTime.now().add(const Duration(days: 1));
 
 
-final DateFormat _dateFormatter = DateFormat('MMM , yyyy');
+final DateFormat _dateFormatter = DateFormat('MMM dd,yyyy');
 
 
 
@@ -58,7 +58,7 @@ final DateFormat _dateFormatter = DateFormat('MMM , yyyy');
             onPressed: () {
               // Handle previous date range
               setState(() {
-      startDate = startDate.subtract(const Duration(days: 30)); // Subtract 7 days from the start date
+      startDate = startDate.subtract(const Duration(days: 1)); // Subtract 7 days from the start date
      // Subtract 7 days from the end date
     });
             },

@@ -3,7 +3,7 @@ import 'package:patofy/constants/colors.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
-import '../../widgets/category_widget.dart';
+import 'income_category_widget.dart';
 
 class AddIncomeWidget extends StatefulWidget {
   const AddIncomeWidget({super.key});
@@ -127,7 +127,7 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
             Padding(padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
             child: GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_)=>const CategoryPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (_)=>const IncomeCategoryPage()));
               },
               child: Container(
                 height: 50,

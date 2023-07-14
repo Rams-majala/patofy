@@ -18,21 +18,7 @@ class _BarChartPageState extends State<BarChartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Styles.primaryWhiteColor),
-        backgroundColor: Styles.primaryRedColor,
-        elevation: 0,
-        title: Text(
-          "Chart Column",
-          style: TextStyle(color: Styles.primaryWhiteColor),
-        ),
-        actions: [
-          Icon(
-            Icons.more_vert,
-            color: Styles.primaryWhiteColor,
-          )
-        ],
-      ),
+      
       body: Column(
         children: [
           Expanded(
