@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>13960624684-nfh4rvdfkjd9e2k6uk7u42e7t9k5kdvp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.13960624684-nfh4rvdfkjd9e2k6uk7u42e7t9k5kdvp</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB1lWPGrlO24aljILKC1DQrDz3YCW3HIPM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>13960624684</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.patofy.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>patofy-db</string>
+	<key>STORAGE_BUCKET</key>
+	<string>patofy-db.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:13960624684:ios:0ce39ae8f3e04f6e962f89</string>
+</dict>
+</plist>

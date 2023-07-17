@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
 
 import '../screens/home_screen.dart';
-import 'add_expenses_widget.dart';
 
 class BudgetedIncomeTab extends StatefulWidget {
   const BudgetedIncomeTab({Key? key}) : super(key: key);
@@ -14,34 +13,34 @@ class BudgetedIncomeTab extends StatefulWidget {
 class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
   List<TableRow> tableRows = [
     // Existing rows in the table
-    TableRow(
+    const TableRow(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text('Category 1'),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text('Amount 1'),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text('Description 1'),
         ),
       ],
     ),
-    TableRow(
+    const TableRow(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text('Category 2'),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text('Amount 2'),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text('Description 2'),
         ),
       ],
@@ -52,18 +51,18 @@ class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
     setState(() {
       // Add a new row to the table
       tableRows.add(
-        TableRow(
+        const TableRow(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text('New Category'),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text('New Amount'),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text('New Description'),
             ),
           ],
@@ -154,10 +153,10 @@ class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
                       decoration: BoxDecoration(
                         color: Colors.grey.shade300,
                       ),
-                      children: [
+                      children: const [
                         Center(
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: Text(
                               'Category',
                               style: TextStyle(
@@ -168,7 +167,7 @@ class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
                         ),
                         Center(
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: Text(
                               'Amount',
                               style: TextStyle(
@@ -179,7 +178,7 @@ class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
                         ),
                         Center(
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: Text(
                               'Description',
                               style: TextStyle(
@@ -196,8 +195,8 @@ class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
                         color: Colors.grey.shade300,
                       ),
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Text(
                             'Total',
                             style: TextStyle(
@@ -205,8 +204,8 @@ class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Text(
                             'Total Amount',
                             style: TextStyle(
@@ -237,7 +236,7 @@ class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
               const SizedBox(height: 10.0),
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_)=> HomeScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (_)=> const HomeScreen()));
               },
               child: Container(
                 height: 40,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
+import 'package:patofy/screens/pages/home_page.dart';
 
 class IncomeCategoryPage extends StatefulWidget {
   const IncomeCategoryPage({Key? key}) : super(key: key);
@@ -56,9 +57,7 @@ class _IncomeCategoryPageState extends State<IncomeCategoryPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Styles.primaryRedColor,
         onPressed: () {
-          // Handle the save button press here
-          // You can access the selectedCategories list and perform any necessary action
-          print(selectedCategories);
+         Navigator.push(context, MaterialPageRoute(builder: (_)=>HomePage()));
         },
         child: Text("Save",style: TextStyle(color: Styles.primaryWhiteColor),),
       ),

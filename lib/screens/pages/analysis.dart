@@ -3,12 +3,9 @@ import 'package:patofy/constants/colors.dart';
 import 'package:patofy/screens/pages/barchart.dart';
 import 'package:patofy/screens/pages/linechart.dart';
 import 'package:patofy/screens/pages/piecharts.dart';
-import 'package:pie_chart/pie_chart.dart';
-
-import '../../model/charts_model.dart';
 
 class AnalysisPage extends StatefulWidget {
-  const AnalysisPage({Key? key});
+  const AnalysisPage({super.key,});
 
   @override
   State<AnalysisPage> createState() => _AnalysisPageState();
@@ -59,7 +56,7 @@ class _AnalysisPageState extends State<AnalysisPage> with SingleTickerProviderSt
               
               ),
         ),
-        body:  TabBarView(
+        body:  const TabBarView(
               
               children: [ PieChartPage(), BarChartPage(),LineChartPage()],
             ),

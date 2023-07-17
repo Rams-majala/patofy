@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:patofy/constants/colors.dart';
 
 class LineChartPage extends StatefulWidget {
   const LineChartPage({super.key});
@@ -11,7 +10,7 @@ class LineChartPage extends StatefulWidget {
 class _LineChartPageState extends State<LineChartPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Text("No data"),
       ),

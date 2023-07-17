@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patofy/screens/pages/analysis.dart';
-import 'package:patofy/screens/pages/barchart.dart';
 import 'package:patofy/screens/pages/budgeted_income.dart';
 import 'package:patofy/screens/pages/home_page.dart';
-import 'package:patofy/screens/pages/linechart.dart';
-import 'package:patofy/screens/pages/piecharts.dart';
 import 'package:patofy/screens/pages/settings_page.dart';
 
 import '../constants/colors.dart';

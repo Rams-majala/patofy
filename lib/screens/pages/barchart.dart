@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/colors.dart';
 import '../../model/charts_model.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 

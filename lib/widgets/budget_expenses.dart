@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
 import 'package:patofy/screens/home_screen.dart';
 
-import '../screens/pages/home_page.dart';
-import 'add_expenses_widget.dart';
 
 class BudgetedExpensesTab extends StatefulWidget {
   const BudgetedExpensesTab({Key? key}) : super(key: key);
@@ -15,34 +13,34 @@ class BudgetedExpensesTab extends StatefulWidget {
 class _BudgetedExpensesTabState extends State<BudgetedExpensesTab> {
   List<TableRow> tableRows = [
     // Existing rows in the table
-    TableRow(
+    const TableRow(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text('Category 1'),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text('Amount 1'),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text('Description 1'),
         ),
       ],
     ),
-    TableRow(
+    const TableRow(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text('Category 2'),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text('Amount 2'),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text('Description 2'),
         ),
       ],
@@ -53,18 +51,18 @@ class _BudgetedExpensesTabState extends State<BudgetedExpensesTab> {
     setState(() {
       // Add a new row to the table
       tableRows.add(
-        TableRow(
+        const TableRow(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text('New Category'),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text('New Amount'),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text('New Description'),
             ),
           ],
@@ -155,10 +153,10 @@ Widget build(BuildContext context) {
                     decoration: BoxDecoration(
                       color: Colors.grey.shade300,
                     ),
-                    children: [
+                    children: const [
                       Center(
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(8.0),
                           child: Text(
                             'Category',
                             style: TextStyle(
@@ -169,7 +167,7 @@ Widget build(BuildContext context) {
                       ),
                       Center(
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(8.0),
                           child: Text(
                             'Amount',
                             style: TextStyle(
@@ -180,7 +178,7 @@ Widget build(BuildContext context) {
                       ),
                       Center(
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(8.0),
                           child: Text(
                             'Description',
                             style: TextStyle(
@@ -197,8 +195,8 @@ Widget build(BuildContext context) {
                       color: Colors.grey.shade300,
                     ),
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Text(
                           'Total',
                           style: TextStyle(
@@ -206,8 +204,8 @@ Widget build(BuildContext context) {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Text(
                           'Total Amount',
                           style: TextStyle(
@@ -238,7 +236,7 @@ Widget build(BuildContext context) {
             const SizedBox(height: 10.0),
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_)=> HomeScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (_)=> const HomeScreen()));
               },
               child: Container(
                 height: 40,

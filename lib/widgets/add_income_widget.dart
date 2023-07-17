@@ -1,8 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
-
+import 'package:path_provider/path_provider.dart';
 import 'income_category_widget.dart';
 
 class AddIncomeWidget extends StatefulWidget {
@@ -29,12 +32,26 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
     });
   }
 
-  void _onCalculatePressed() {
+  void _onCalculatePressed() async{
     setState(() {
+
+      String details ="";
+      double amount = double.tryParse(_amountController.text) ?? 00;
+      String createdAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+
+      Map<String, dynamic> incomeData ={
+        'datails' : details,
+        'amount' : amount,
+        'createdAt' : createdAt,
+      };
+
+       _saveIncomeData(incomeData);
       // Perform the calculation logic here
       // You can use a parser library or evaluate the expression manually
 
       // Example: Calculate the result of the expression
+
+
     });
   }
 
@@ -43,6 +60,22 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
      _amountController.text = '';
     });
   }
+
+  Future<void> _saveIncomeData(Map<String, dynamic> incomeData) async {
+  final directory = await getApplicationDocumentsDirectory();
+  final file = File('${directory.path}/income_data.json');
+
+  List<Map<String, dynamic>> existingData = [];
+  if (await file.exists()) {
+    final contents = await file.readAsString();
+    existingData = List<Map<String, dynamic>>.from(json.decode(contents));
+  }
+
+  existingData.add(incomeData);
+  print("income data added ");
+  await file.writeAsString(json.encode(existingData));
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +231,7 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
           ),
-          child: const Text('='),
+          child: const Text("Save"),
         ),
       ),
     );

@@ -4,7 +4,7 @@ import 'package:patofy/constants/colors.dart';
 import 'add_expenses_widget.dart';
 
 class ExpensesTab extends StatelessWidget {
-  const ExpensesTab({Key? key});
+  const ExpensesTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -105,13 +105,13 @@ class ExpensesTab extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const Column(
-                                  children: [Text("Budgeted Expenses"), Text("empty")],
+                                  children: [Text("B Expenses"), Text("empty")],
                                 ),
                                  const Icon(Icons.remove),
                                 Column(
                                   children: [
                                     Text(
-                                      "Actual Expenses",
+                                      "A Expenses",
                                       style: TextStyle(color: Styles.primaryGreenColor),
                                     ),
                                     Text(

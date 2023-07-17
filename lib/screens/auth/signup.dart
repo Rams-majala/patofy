@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patofy/constants/colors.dart';
 import 'package:patofy/screens/auth/signin.dart';
+
+
 import 'dart:async';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
@@ -147,8 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     // Handle signup button press
-    // Call the signup method in your authentication controller
-    // with the provided user information
+    
 
     // Show success dialog
     showDialog(

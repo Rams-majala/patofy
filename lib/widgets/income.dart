@@ -4,7 +4,7 @@ import 'package:patofy/constants/colors.dart';
 import 'add_income_widget.dart';
 
 class IncomeTab extends StatelessWidget {
-  const IncomeTab({Key? key});
+  const IncomeTab({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,9 @@ class IncomeTab extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const Column(
-                                  children: [Text("Actual"), Text("empty")],
+                                  children: [Text("Actual"), 
+                                  
+                                  Text("empty")],//Update this with real actual Income amount 
                                 ),
                                 const SizedBox(
                                   width: 19,
@@ -61,7 +63,7 @@ class IncomeTab extends StatelessWidget {
                                     Text(
                                       "empty",
                                       style: TextStyle(color: Styles.primaryGreenColor),
-                                    )
+                                    )//update this real budgeted income amount
                                   ],
                                 )
                               ],
