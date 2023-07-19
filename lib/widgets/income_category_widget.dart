@@ -57,9 +57,9 @@ class _IncomeCategoryPageState extends State<IncomeCategoryPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Styles.primaryRedColor,
         onPressed: () {
-         Navigator.push(context, MaterialPageRoute(builder: (_)=>HomePage()));
+         Navigator.pop(context);
         },
-        child: Text("Save",style: TextStyle(color: Styles.primaryWhiteColor),),
+        child: Text("Add",style: TextStyle(color: Styles.primaryWhiteColor),),
       ),
     );
   }

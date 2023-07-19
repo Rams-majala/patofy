@@ -6,6 +6,8 @@ import 'package:patofy/screens/auth/signin.dart';
 
 import 'dart:async';
 
+import 'otp.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -190,7 +192,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     Timer(const Duration(seconds: 8), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const SignInScreen()),
+        MaterialPageRoute(builder: (_) =>  OtpScreen()),
       );
     });
   }
@@ -292,6 +294,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     labelText: 'Password',
                     border: const UnderlineInputBorder(),
                     errorText: _passwordError,
+                    suffixIcon: Icon(Icons.remove_red_eye,size: 16,)
                   ),
                   style: TextStyle(
                     color: _passwordError != null ? Colors.red : null,
@@ -305,6 +308,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: TextFormField(
                   controller: _confirmPasswordController,
                   decoration: InputDecoration(
+                    suffixIcon: Icon(Icons.remove_red_eye,size: 16,),
                     labelText: 'Confirm Password',
                     border: const UnderlineInputBorder(),
                     errorText: _confirmPasswordError,
@@ -319,6 +323,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Row(
                 children: [
                   Checkbox(
+                    checkColor: Colors.blue.shade800,
+                    activeColor: Styles.primaryWhiteColor,
                     value: _agreeToTerms,
                     onChanged: (value) {
                       setState(() {
@@ -326,7 +332,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       });
                     },
                   ),
-                  const Text('I agree to the terms and conditions'),
+                   Text('I agree to the terms and conditions',
+                  style: TextStyle(color: Colors.blue.shade800),),
                 ],
               ),
               if (_termsError != null)

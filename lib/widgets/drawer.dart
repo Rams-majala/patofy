@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:patofy/screens/pages/privacy.dart';
 import '../constants/colors.dart';
-
+import '../screens/pages/about.dart';
+import 'package:share/share.dart'; // Import the share package
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
 
@@ -48,13 +50,22 @@ class DrawerWidget extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                buildSectionHeader('Settings'),
-                buildListTile(Icons.info, 'About patofy'),
-                buildListTile(Icons.privacy_tip, 'Privacy policy'),
-                buildSectionHeader('Synchronization'),
-                buildListTile(Icons.add_box, 'Dropbox'),
-                buildListTile(Icons.add_to_drive, 'Google Drive'),
-                buildListTile(Icons.backup, 'Data Backup'),
+                buildListTile(Icons.info, 'About patofy',(){
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=>AboutPage()));
+                }),
+                buildListTile(Icons.privacy_tip, 'Privacy policy',(){
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=>PrivacyPage()));
+                }),
+                buildSectionHeader('Synchronization',),
+                buildListTile(Icons.add_box, 'Dropbox',(){
+                  
+                }),
+                buildListTile(Icons.add_to_drive, 'Google Drive',(){
+                  
+                }),
+                buildListTile(Icons.backup, 'Data Backup',(){
+                 
+                }),
               ],
             ),
           ),
@@ -69,7 +80,7 @@ class DrawerWidget extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: () => _showShareDialog(context),
+                onPressed: (){},
                 child: Text(
                   'Share',
                   style: TextStyle(color: Styles.primaryBlackColor),
@@ -103,10 +114,11 @@ class DrawerWidget extends StatelessWidget {
     );
   }
 
-  Widget buildListTile(IconData icon, String title) {
+  Widget buildListTile(IconData icon, String title, onTap) {
     return ListTile(
       leading: Icon(icon),
       title: Text(title),
+      onTap: onTap,
     );
   }
 
@@ -168,76 +180,6 @@ void _showExportDialog(BuildContext context) {
   }
 
 //share dialog
-void _showShareDialog(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
-    ),
-    builder: (BuildContext context) {
-      return Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              'Share via',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle share via email action
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.email,color: Styles.primaryRedColor,),
-              label: Text('Email',style:TextStyle(color: Styles.primaryBlackColor)),
-            ),
-            const SizedBox(height: 12.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle share via whatsap action
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.share_rounded,color: Styles.primaryRedColor,),
-              label: Text('Whatsapp',style:TextStyle(color: Styles.primaryBlackColor)),
-            ),
-            const SizedBox(height: 12.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle share via bluetooth action
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.bluetooth,color: Styles.primaryRedColor,),
-              label: Text('Bluetooth',style:TextStyle(color: Styles.primaryBlackColor)),
-            ),
-            const SizedBox(height: 12.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle share via google drive  action
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.add_to_drive,color: Styles.primaryRedColor,),
-              label: Text('Drive',style:TextStyle(color: Styles.primaryBlackColor)),
-            ),
-            const SizedBox(height: 12.0),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle share via print media action
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.print,color: Styles.primaryRedColor,),
-              label: Text('Print',style:TextStyle(color: Styles.primaryBlackColor)),
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
+
 
 }

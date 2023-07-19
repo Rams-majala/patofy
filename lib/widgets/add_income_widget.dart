@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:path_provider/path_provider.dart';
 import 'income_category_widget.dart';
 
 class AddIncomeWidget extends StatefulWidget {
@@ -45,7 +45,7 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
         'createdAt' : createdAt,
       };
 
-       _saveIncomeData(incomeData);
+      //  _saveIncomeData(incomeData);
       // Perform the calculation logic here
       // You can use a parser library or evaluate the expression manually
 
@@ -61,7 +61,7 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
     });
   }
 
-  Future<void> _saveIncomeData(Map<String, dynamic> incomeData) async {
+  /* Future<void> _saveIncomeData(Map<String, dynamic> incomeData) async {
   final directory = await getApplicationDocumentsDirectory();
   final file = File('${directory.path}/income_data.json');
 
@@ -75,7 +75,7 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
   print("income data added ");
   await file.writeAsString(json.encode(existingData));
 }
-
+*/
 
   @override
   Widget build(BuildContext context) {
@@ -120,42 +120,6 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
             ),
             const SizedBox(height: 20,),
             const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildNumberButton('7'),
-                _buildNumberButton('8'),
-                _buildNumberButton('9'),
-                _buildOperatorButton('/'),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildNumberButton('4'),
-                _buildNumberButton('5'),
-                _buildNumberButton('6'),
-                _buildOperatorButton('*'),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildNumberButton('1'),
-                _buildNumberButton('2'),
-                _buildNumberButton('3'),
-                _buildOperatorButton('-'),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildNumberButton('0'),
-                _buildClearButton(),
-                _buildCalculateButton(),
-                _buildOperatorButton('+'),
-              ],
-            ),
 
             Padding(padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
             child: GestureDetector(
@@ -174,66 +138,27 @@ class _AddIncomeWidgetState extends State<AddIncomeWidget> {
               ),
             ),
             ),
+            Padding(padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
+            child: GestureDetector(
+              onTap: (){
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 50,
+               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Styles.primaryRedColor
+               ),
+               child: Center(
+                child: Text("Add Income",style: TextStyle(color: Styles.primaryWhiteColor),),
+               ),
+              ),
+            ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildNumberButton(String buttonText) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: () => _onButtonPressed(buttonText),
-          child: Text(buttonText),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildOperatorButton(String buttonText) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: () => _onButtonPressed(buttonText),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
-          ),
-          child: Text(buttonText),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildClearButton() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: _onClearPressed,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-          ),
-          child: const Icon(Icons.clear),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCalculateButton() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: _onCalculatePressed,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-          ),
-          child: const Text("Save"),
-        ),
-      ),
-    );
-  }
 }

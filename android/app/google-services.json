@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "13960624684",
-    "project_id": "patofy-db",
-    "storage_bucket": "patofy-db.appspot.com"
+    "project_number": "31381325419",
+    "project_id": "patofy-db-auth",
+    "storage_bucket": "patofy-db-auth.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:13960624684:android:5bf99f6a420570ba962f89",
+        "mobilesdk_app_id": "1:31381325419:android:624c75532b7491240ad32e",
         "android_client_info": {
           "package_name": "com.example.patofy"
         }
       },
       "oauth_client": [
         {
-          "client_id": "13960624684-nf31hti8fq7mkuvhtech0nl1ed7q5kje.apps.googleusercontent.com",
+          "client_id": "31381325419-d3o9tn76q48ta0gfkv12mcvah8o888gh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBP4sro23NJ3dAPLxvTG2kVVxjp1KSbuGc"
+          "current_key": "AIzaSyDXCp_0LIvq---dsuCITwNIaciSqaZw1aw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "13960624684-nf31hti8fq7mkuvhtech0nl1ed7q5kje.apps.googleusercontent.com",
+              "client_id": "31381325419-d3o9tn76q48ta0gfkv12mcvah8o888gh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

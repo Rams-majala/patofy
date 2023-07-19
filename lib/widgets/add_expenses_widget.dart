@@ -29,20 +29,6 @@ class _AddExpensesWidgetState extends State<AddExpensesWidget> {
     });
   }
 
-  void _onCalculatePressed() {
-    setState(() {
-      // Perform the calculation logic here
-      // You can use a parser library or evaluate the expression manually
-
-      // Example: Calculate the result of the expression
-    });
-  }
-
-  void _onClearPressed() {
-    setState(() {
-     _amountController.text = '';
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,43 +72,7 @@ class _AddExpensesWidgetState extends State<AddExpensesWidget> {
               ),
             ),
             const SizedBox(height: 20,),
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildNumberButton('7'),
-                _buildNumberButton('8'),
-                _buildNumberButton('9'),
-                _buildOperatorButton('/'),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildNumberButton('4'),
-                _buildNumberButton('5'),
-                _buildNumberButton('6'),
-                _buildOperatorButton('*'),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildNumberButton('1'),
-                _buildNumberButton('2'),
-                _buildNumberButton('3'),
-                _buildOperatorButton('-'),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildNumberButton('0'),
-                _buildClearButton(),
-                _buildCalculateButton(),
-                _buildOperatorButton('+'),
-              ],
-            ),
+          
 
             Padding(padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
             child: GestureDetector(
@@ -141,64 +91,25 @@ class _AddExpensesWidgetState extends State<AddExpensesWidget> {
               ),
             ),
             ),
+
+            Padding(padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
+            child: GestureDetector(
+              onTap: (){
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 50,
+               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Styles.primaryRedColor
+               ),
+               child: Center(
+                child: Text("Add Expenses",style: TextStyle(color: Styles.primaryWhiteColor),),
+               ),
+              ),
+            ),
+            ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNumberButton(String buttonText) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: () => _onButtonPressed(buttonText),
-          child: Text(buttonText),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildOperatorButton(String buttonText) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: () => _onButtonPressed(buttonText),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
-          ),
-          child: Text(buttonText),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildClearButton() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: _onClearPressed,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-          ),
-          child: const Icon(Icons.clear),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCalculateButton() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: _onCalculatePressed,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-          ),
-          child: const Text('='),
         ),
       ),
     );

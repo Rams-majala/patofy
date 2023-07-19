@@ -62,11 +62,9 @@ class _CategoryPageState extends State<CategoryPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Styles.primaryRedColor,
         onPressed: () {
-          // Handle the save button press here
-          // You can access the selectedCategories list and perform any necessary action
-          print(selectedCategories);
+          Navigator.pop(context);
         },
-        child: Text("Save",style: TextStyle(color: Styles.primaryWhiteColor),),
+        child: Text("Add",style: TextStyle(color: Styles.primaryWhiteColor),),
       ),
     );
   }

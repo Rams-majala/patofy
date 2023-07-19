@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:13960624684:ios:d842bd74e24e6f0a962f89",
-  "FIREBASE_PROJECT_ID": "patofy-db",
-  "GCM_SENDER_ID": "13960624684"
+  "GOOGLE_APP_ID": "1:31381325419:ios:8f955a174f6021e40ad32e",
+  "FIREBASE_PROJECT_ID": "patofy-db-auth",
+  "GCM_SENDER_ID": "31381325419"
 }

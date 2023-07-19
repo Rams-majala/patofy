@@ -33,11 +33,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.wallet),
+          icon: Icon(Icons.edit_document),
           label: 'budget',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.analytics_sharp),
+          icon: Icon(Icons.pie_chart
+          ),
           label: 'Add Expense',
         ),
       ],
