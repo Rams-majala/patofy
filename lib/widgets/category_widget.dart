@@ -10,7 +10,7 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   List<Category> categories = [
-    Category(name: 'Clothes', icon: Icons.shopping_bag),
+   Category(name: 'Clothes', icon: Icons.shopping_bag),
     Category(name: 'Food & Beverage', icon: Icons.restaurant),
     Category(name: 'Entertainment', icon: Icons.movie),
     Category(name: 'Household', icon: Icons.home),
@@ -35,7 +35,7 @@ class _CategoryPageState extends State<CategoryPage> {
         backgroundColor: Styles.primaryRedColor,
         iconTheme: IconThemeData(color: Styles.primaryWhiteColor),
         title: Text(
-          "Select Categories",
+          "Select Income Categories",
           style: TextStyle(color: Styles.primaryWhiteColor),
         ),
         centerTitle: true,
@@ -62,9 +62,13 @@ class _CategoryPageState extends State<CategoryPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Styles.primaryRedColor,
         onPressed: () {
-          Navigator.pop(context);
+          // Pass the selected categories back to the previous screen (AddIncomeWidget)
+          Navigator.pop(context, selectedCategories);
         },
-        child: Text("Add",style: TextStyle(color: Styles.primaryWhiteColor),),
+        child: Text(
+          "Add",
+          style: TextStyle(color: Styles.primaryWhiteColor),
+        ),
       ),
     );
   }

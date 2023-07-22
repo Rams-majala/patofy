@@ -1,49 +1,88 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
-// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
+import 'package:patofy/services/expenses_services.dart';
+import '../model/epenses_model.dart';
 
-import '../../widgets/category_widget.dart';
+import 'category_widget.dart';
 
 class AddExpensesWidget extends StatefulWidget {
-  const AddExpensesWidget({super.key});
+  const AddExpensesWidget({Key? key}) : super(key: key);
 
   @override
   State<AddExpensesWidget> createState() => _AddExpensesWidgetState();
 }
 
 class _AddExpensesWidgetState extends State<AddExpensesWidget> {
-  
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _detailsController = TextEditingController();
 
-   final TextEditingController _amountController = TextEditingController();
+  User? _currentUser;
 
- @override
+  List<Category> selectedCategories = []; // Store the selected categories
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentUser();
+  }
+
+  void _getCurrentUser() {
+    _currentUser = FirebaseAuth.instance.currentUser;
+  }
+
+  @override
   void dispose() {
     _amountController.dispose();
+    _detailsController.dispose();
     super.dispose();
   }
 
-  void _onButtonPressed(String buttonText) {
+  void _onCalculatePressed() async {
     setState(() {
-       _amountController.text += buttonText;
+      String details = _detailsController.text;
+      String categoryText = selectedCategories.map((category) => category.name).join(', ');
+      double amount = double.tryParse(_amountController.text) ?? 0;
+      String createdAt = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+      String userId = _currentUser?.uid ?? "";
+
+      Expense expense = Expense(
+        id: "", // You can generate a unique ID or leave it empty if Firestore generates it automatically
+        details: details,
+        category: categoryText,
+        amount: amount,
+        createdAt: createdAt,
+        userId: userId,
+      );
+
+      ExpenseFirestoreService().addExpense(expense);
+
+      _amountController.text = "";
+      _detailsController.text = "";
+
+      Navigator.pop(context);
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Styles.primaryRedColor,
-        title:  Text('New Expenses',style: TextStyle(color: Styles.primaryWhiteColor),),
-        centerTitle: false,
+        title: Text(
+          'New Income',
+          style: TextStyle(color: Styles.primaryWhiteColor),
+        ),
+        centerTitle: true,
         iconTheme: IconThemeData(color: Styles.primaryWhiteColor),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: Text(
               DateFormat('yyyy-MM-dd').format(DateTime.now()),
-              style: TextStyle(fontSize: 18.0,color: Styles.primaryWhiteColor),
+              style: TextStyle(fontSize: 18.0, color: Styles.primaryWhiteColor),
             ),
           ),
         ],
@@ -54,60 +93,74 @@ class _AddExpensesWidgetState extends State<AddExpensesWidget> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
+                controller: _detailsController,
                 decoration: const InputDecoration(
                   hintText: 'Details',
                 ),
-                
               ),
             ),
-            const SizedBox(height: 40,),
+            const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 controller: _amountController,
                 decoration: const InputDecoration(
-                  
                   hintText: 'Amount in Tsh',
                 ),
               ),
             ),
-            const SizedBox(height: 20,),
-          
+            const SizedBox(height: 20),
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              child: GestureDetector(
+                onTap: () async {
+                  // Navigate to the IncomeCategoryPage and wait for the selected categories
+                  List<Category>? selectedCategories = await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const CategoryPage()),
+                  );
 
-            Padding(padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
-            child: GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_)=>const CategoryPage()));
-              },
-              child: Container(
-                height: 50,
-               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Styles.primaryRedColor
-               ),
-               child: Center(
-                child: Text("Choose Category",style: TextStyle(color: Styles.primaryWhiteColor),),
-               ),
+                  // If selected categories are not null, update the input field with them
+                  if (selectedCategories != null && selectedCategories.isNotEmpty) {
+                    setState(() {
+                      this.selectedCategories = selectedCategories;
+                    });
+                  }
+                },
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Styles.primaryRedColor,
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Choose Category",
+                      style: TextStyle(color: Styles.primaryWhiteColor),
+                    ),
+                  ),
+                ),
               ),
             ),
-            ),
-
-            Padding(padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
-            child: GestureDetector(
-              onTap: (){
-                Navigator.pop(context);
-              },
-              child: Container(
-                height: 50,
-               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Styles.primaryRedColor
-               ),
-               child: Center(
-                child: Text("Add Expenses",style: TextStyle(color: Styles.primaryWhiteColor),),
-               ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              child: GestureDetector(
+                onTap: _onCalculatePressed,
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Styles.primaryRedColor,
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Add Income",
+                      style: TextStyle(color: Styles.primaryWhiteColor),
+                    ),
+                  ),
+                ),
               ),
-            ),
             ),
           ],
         ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
-import 'package:patofy/screens/pages/home_page.dart';
 
 class IncomeCategoryPage extends StatefulWidget {
   const IncomeCategoryPage({Key? key}) : super(key: key);
@@ -13,12 +12,7 @@ class _IncomeCategoryPageState extends State<IncomeCategoryPage> {
   List<Category> categories = [
     Category(name: 'wages', icon: Icons.wallet),
     Category(name: 'salary', icon: Icons.badge),
-    Category(name: 'Tips & Commisions', icon: Icons.system_security_update_sharp),
-    Category(name: 'Selling items', icon: Icons.attach_money_outlined),
-    Category(name: 'Profit', icon: Icons.wallet_travel),
-    Category(name: 'Rental Properties', icon: Icons.car_rental),
-    Category(name: 'Divedends & capital gain', icon: Icons.local_hospital),
-    Category(name: 'Royalties & limited part', icon: Icons.phone),
+    // Add more categories as needed...
   ];
 
   List<Category> selectedCategories = [];
@@ -57,9 +51,13 @@ class _IncomeCategoryPageState extends State<IncomeCategoryPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Styles.primaryRedColor,
         onPressed: () {
-         Navigator.pop(context);
+          // Pass the selected categories back to the previous screen (AddIncomeWidget)
+          Navigator.pop(context, selectedCategories);
         },
-        child: Text("Add",style: TextStyle(color: Styles.primaryWhiteColor),),
+        child: Text(
+          "Add",
+          style: TextStyle(color: Styles.primaryWhiteColor),
+        ),
       ),
     );
   }

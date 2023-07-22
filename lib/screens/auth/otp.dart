@@ -1,104 +1,131 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
 import 'package:patofy/screens/auth/signin.dart';
+import 'package:patofy/screens/auth/signup.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  
+  const OtpScreen({super.key,});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
 
 class _OtpScreenState extends State<OtpScreen> {
- List<String> verificationCode = List<String>.filled(6, '');
-  int currentBoxIndex = 0;
-  bool isLoading = false;
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+//  List<String> verificationCode = List<String>.filled(6, '');
+//   int currentBoxIndex = 0;
+//   bool isLoading = false;
 
-  void _onCodeChanged(String value) {
-    setState(() {
-      verificationCode[currentBoxIndex] = value;
-      if (currentBoxIndex < verificationCode.length - 1) {
-        currentBoxIndex++;
-      } else {
-        // All boxes are filled, simulate verification process
-        isLoading = true;
-        Navigator.push(context, MaterialPageRoute(builder: (_)=> SignInScreen()));
+//   void _onCodeChanged(String value) {
+//     setState(() {
+//       verificationCode[currentBoxIndex] = value;
+//       if (currentBoxIndex < verificationCode.length - 1) {
+//         currentBoxIndex++;
+//       } else {
+//         // All boxes are filled, simulate verification process
+//         isLoading = true;
+//         Navigator.push(context, MaterialPageRoute(builder: (_)=> SignInScreen()));
         
+//       }
+//     });
+
+//     // Move to the next box automatically
+//     if (value.isNotEmpty && currentBoxIndex < verificationCode.length - 1) {
+//       FocusScope.of(context).nextFocus();
+//     }
+//   }
+
+
+//   List<Widget> buildCodeBoxes() {
+//     List<Widget> codeBoxes = [];
+//     for (int i = 0; i < verificationCode.length; i++) {
+//       codeBoxes.add(
+//         Container(
+//           width: 50,
+//           height: 60,
+//           margin: EdgeInsets.symmetric(horizontal: 4),
+//           decoration: BoxDecoration(
+//             border: Border.all(width: 2),
+//             borderRadius: BorderRadius.circular(10),
+//           ),
+//           child: Center(
+//             child: TextFormField(
+//               onChanged: (value) => _onCodeChanged(value),
+//               maxLength: 1,
+//               keyboardType: TextInputType.number,
+//               textAlign: TextAlign.center,
+//               style: TextStyle(fontSize: 24),
+//               decoration: InputDecoration(
+//                 counterText: '',
+//                 border: InputBorder.none,
+//               ),
+//             ),
+//           ),
+//         ),
+//       );
+//     }
+//     return codeBoxes;
+//   }
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  Stream<User?>? _authStateChanges;
+
+  @override
+  void initState() {
+    super.initState(); 
+    _authStateChanges = _auth.authStateChanges();
+    _authStateChanges!.listen((user) {
+      // Check if the user is not null and their email is verified
+      if (user != null && user.emailVerified) {
+        // User's email is verified, auto redirect to SignInScreen
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => SignInScreen()));
       }
     });
-
-    // Move to the next box automatically
-    if (value.isNotEmpty && currentBoxIndex < verificationCode.length - 1) {
-      FocusScope.of(context).nextFocus();
-    }
   }
-
-
-  List<Widget> buildCodeBoxes() {
-    List<Widget> codeBoxes = [];
-    for (int i = 0; i < verificationCode.length; i++) {
-      codeBoxes.add(
-        Container(
-          width: 50,
-          height: 60,
-          margin: EdgeInsets.symmetric(horizontal: 4),
-          decoration: BoxDecoration(
-            border: Border.all(width: 2),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: TextFormField(
-              onChanged: (value) => _onCodeChanged(value),
-              maxLength: 1,
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 24),
-              decoration: InputDecoration(
-                counterText: '',
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-    return codeBoxes;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: isLoading
-            ? CircularProgressIndicator()
-            : Column(
+        child:Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.verified_user,
+                    Icons.email,
                     size: 180,
                     color: Styles.primaryRedColor,
                   ),
                   SizedBox(height: 24),
                   Text(
-                    'Verify Your Phone number',
+                    'Verify your email address',
                     style: TextStyle(fontSize: 25),
                     textAlign: TextAlign.center,
                   ),
                   Center(
                     child: Text(
-                      'Enter the verification code we have sent to  your phone number',
+                      'we have just sent email verification link on your email.Please check the email and click on that link to verify your email address',
                       style: TextStyle(fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
                   ),
                   SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: buildCodeBoxes(),
+                 Center(
+                    child: Text(
+                      'if not auto redirected after verification,click resend email link'
+                      ,
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  SizedBox(height: 24),
                   
+                  SizedBox(height: 10),
+                  TextButton(onPressed: (){}, child: Text("Resend Email ink")),
+                  SizedBox(height: 5),
+                  TextButton(onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (_)=>SignInScreen()));
+                  }, child: Text("back to login"))
                 ],
               ),
       ),

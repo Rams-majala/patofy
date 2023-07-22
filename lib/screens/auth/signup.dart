@@ -1,22 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:patofy/constants/colors.dart';
+import 'package:patofy/screens/auth/otp.dart';
 import 'package:patofy/screens/auth/signin.dart';
-
-
-import 'dart:async';
-
-import 'otp.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -26,6 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       TextEditingController();
 
   bool _agreeToTerms = false;
+  bool _isSigningUp = false; // New variable to track signup process
 
   String? _firstNameError;
   String? _lastNameError;
@@ -50,7 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
-  void _signup() {
+  Future<void> _signup() async {
     final String firstName = _firstNameController.text;
     final String lastName = _lastNameController.text;
     final String email = _emailController.text;
@@ -151,50 +153,77 @@ class _SignUpScreenState extends State<SignUpScreen> {
       });
     }
 
-    // Handle signup button press
+
     
+  // Check if email or phone number already exists in Firestore
+  QuerySnapshot emailSnapshot = await _firestore
+      .collection('users')
+      .where('email', isEqualTo: email)
+      .get();
 
-    // Show success dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Styles.primaryWhiteColor,
-          contentPadding: const EdgeInsets.all(20.0),
-          content: const Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.check_circle,
-                color: Colors.green,
-                size: 64.0,
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                'Sign Up Successful',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'Thank you for signing up to Patofy App, \nplease login using your email and passowrd to access your account',
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  QuerySnapshot phoneNumberSnapshot = await _firestore
+      .collection('users')
+      .where('phoneNumber', isEqualTo: phoneNumber)
+      .get();
 
-    // Redirect to login page after 3 seconds
-    Timer(const Duration(seconds: 8), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) =>  OtpScreen()),
-      );
+  if (emailSnapshot.docs.isNotEmpty) {
+    // Email already exists
+    setState(() {
+      _emailError = 'Email already exists. Please use a different email.';
     });
+    return;
+  }
+
+  if (phoneNumberSnapshot.docs.isNotEmpty) {
+    // Phone number already exists
+    setState(() {
+      _phoneNumberError = 'Phone number already exists. Please use a different phone number.';
+    });
+    return;
+  }
+
+    setState(() {
+      _isSigningUp = true; // Set _isSigningUp to true before starting the signup process
+    });
+
+    try {
+      // Register the user with FirebaseAuth
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      await userCredential.user!.sendEmailVerification();
+
+      await _firestore.collection('users').doc(userCredential.user!.uid).set({
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'phoneNumber': phoneNumber,
+        'password': password,
+        // You can add more fields as needed
+      });
+
+
+
+      print("Successfully registered. Verification email sent to ${userCredential.user!.email}");
+
+      setState(() {
+        _isSigningUp = false; // Set _isSigningUp back to false after signup is completed successfully
+      });
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => OtpScreen()), // Replace OtpScreen with your OTP verification screen
+      );
+    } catch (e) {
+      print("Error occurred $e");
+
+      setState(() {
+        _isSigningUp = false; // Set _isSigningUp back to false if an error occurs during signup
+      });
+    }
   }
 
   @override
@@ -226,6 +255,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: 300.0,
                 child: TextFormField(
                   controller: _firstNameController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     labelText: 'First Name',
                     border: const UnderlineInputBorder(),
@@ -241,6 +271,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: 300.0,
                 child: TextFormField(
                   controller: _lastNameController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     labelText: 'Last Name',
                     border: const UnderlineInputBorder(),
@@ -256,6 +287,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: 300.0,
                 child: TextFormField(
                   controller: _emailController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     border: const UnderlineInputBorder(),
@@ -271,6 +303,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: 300.0,
                 child: TextFormField(
                   controller: _phoneNumberController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     labelText: 'Phone Number',
                     border: const UnderlineInputBorder(),
@@ -290,11 +323,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: 300.0,
                 child: TextFormField(
                   controller: _passwordController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     border: const UnderlineInputBorder(),
                     errorText: _passwordError,
-                    suffixIcon: Icon(Icons.remove_red_eye,size: 16,)
+                    suffixIcon: Icon(Icons.remove_red_eye, size: 16),
                   ),
                   style: TextStyle(
                     color: _passwordError != null ? Colors.red : null,
@@ -307,8 +341,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: 300.0,
                 child: TextFormField(
                   controller: _confirmPasswordController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
-                    suffixIcon: Icon(Icons.remove_red_eye,size: 16,),
+                    suffixIcon: Icon(Icons.remove_red_eye, size: 16),
                     labelText: 'Confirm Password',
                     border: const UnderlineInputBorder(),
                     errorText: _confirmPasswordError,
@@ -332,8 +367,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       });
                     },
                   ),
-                   Text('I agree to the terms and conditions',
-                  style: TextStyle(color: Colors.blue.shade800),),
+                  Text(
+                    'I agree to the terms and conditions',
+                    style: TextStyle(color: Colors.blue.shade800),
+                  ),
                 ],
               ),
               if (_termsError != null)
@@ -346,17 +383,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               const SizedBox(height: 5.0),
               SizedBox(
-                width: double.infinity,
+                
                 height: 50.0,
-                child: ElevatedButton(
-                  onPressed: _signup,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Styles.primaryRedColor,
-                  ),
-                  child:  Text(
-                    'Sign Up',
-                    style: TextStyle(color: Styles.primaryWhiteColor),
-                  ),
+                child: Stack(
+                  children: [
+                    ElevatedButton(
+                      onPressed: _isSigningUp ? null : _signup, // Disable button while signing up
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Styles.primaryRedColor,
+                      ),
+                      child: Text(
+                        _isSigningUp ? 'please wait...' : 'Sign Up', // Show different text based on _isSigningUp
+                        style: TextStyle(color: Styles.primaryWhiteColor),
+                      ),
+                    ),
+                    if (_isSigningUp) // Show the loading indicator when signing up
+                      Positioned.fill(
+                        child: Center(
+                          child: SpinKitCircle(
+                            color: Styles.primaryWhiteColor,
+                            size: 30.0,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
               const SizedBox(height: 10.0),
@@ -392,7 +442,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => const SignInScreen(),
+                          builder: (_) => SignInScreen(),
                         ),
                       );
                     },
@@ -407,4 +457,3 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
-

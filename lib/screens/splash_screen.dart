@@ -1,16 +1,17 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:patofy/screens/auth/otp.dart';
 import '../constants/colors.dart';
+import 'auth/signin.dart';
 import 'auth/signup.dart';
-
+import 'home_screen.dart'; // Replace with your home screen file
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _SplashScreenState createState() => _SplashScreenState();
 }
 
@@ -19,10 +20,23 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-     const Duration(seconds: 10),
+      const Duration(seconds: 3), // Reduced time for demonstration purposes
       () {
-        // Navigate to the next screen after 2 seconds
-        Navigator.push(context, MaterialPageRoute(builder: (_) =>  const SignUpScreen()));
+        // Check if the user is logged in and contains data
+        User? user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          // User is logged in, navigate to home screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => HomeScreen()), // Replace with your home screen
+          );
+        } else {
+          // User is not logged in or data not available, navigate to signin screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => SignInScreen()),
+          );
+        }
       },
     );
   }
@@ -39,13 +53,15 @@ class _SplashScreenState extends State<SplashScreen> {
               'assets/images/patofy-logo.png',
               width: 150,
               height: 150,
-              
             ),
             const SizedBox(height: 10),
-            Text("Patofy",style: TextStyle(fontSize:34,color: Styles.primaryWhiteColor),),
-           const SizedBox(height: 40),
+            Text(
+              "Patofy",
+              style: TextStyle(fontSize: 34, color: Styles.primaryWhiteColor),
+            ),
+            const SizedBox(height: 40),
             SpinKitCircle(
-               color: Styles.primaryWhiteColor,
+              color: Styles.primaryWhiteColor,
               size: 50.0,
             )
           ],

@@ -1,10 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
 
+import '../model/income_model.dart';
+import '../services/income_services.dart';
 import 'add_income_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class IncomeTab extends StatelessWidget {
-  const IncomeTab({super.key,});
+class IncomeTab extends StatefulWidget {
+  const IncomeTab({Key? key}) : super(key: key);
+
+  @override
+  _IncomeTabState createState() => _IncomeTabState();
+}
+
+class _IncomeTabState extends State<IncomeTab> {
+  String actualIncomeAmount = "0.00"; // Initialize with a default value
+  List<Income> incomeList = []; // Initialize an empty list to store income data
+
+  @override
+  void initState() {
+    super.initState();
+    fetchIncomeData(); // Fetch income data when the widget is initialized
+  }
+
+  void fetchIncomeData() async {
+    // Get the current user from FirebaseAuth
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      String currentUserId = user.uid;
+      List<Income> fetchedIncomeList = await FirestoreService().getIncomeForUser(currentUserId);
+      double totalIncomeAmount = 0.0;
+
+      // Calculate the total income amount
+      for (Income income in fetchedIncomeList) {
+        totalIncomeAmount += income.amount;
+      }
+
+      // Update the state with the actual income amount and income data
+      setState(() {
+        actualIncomeAmount = totalIncomeAmount.toStringAsFixed(2);
+        incomeList = fetchedIncomeList;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +54,7 @@ class IncomeTab extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 8.0,left: 18.0),
+                padding: const EdgeInsets.only(top: 8.0, left: 18.0),
                 child: Container(
                   color: Styles.primaryRedColor.withOpacity(0.2),
                   height: 90,
@@ -46,10 +85,14 @@ class IncomeTab extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Column(
-                                  children: [Text("Actual"), 
-                                  
-                                  Text("0.00")],//Update this with real actual Income amount 
+                                Column(
+                                  children: [
+                                    Text("Actual"),
+                                    Text(
+                                      actualIncomeAmount,
+                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
                                 const SizedBox(
                                   width: 19,
@@ -63,7 +106,7 @@ class IncomeTab extends StatelessWidget {
                                     Text(
                                       "0.00",
                                       style: TextStyle(color: Styles.primaryGreenColor),
-                                    )//update this real budgeted income amount
+                                    ),
                                   ],
                                 )
                               ],
@@ -75,7 +118,9 @@ class IncomeTab extends StatelessWidget {
                   ),
                 ),
               ),
-                
+
+              // Display the list of income data
+              IncomeListWidget(incomeList: incomeList),
             ],
           ),
         ),
@@ -90,7 +135,7 @@ class IncomeTab extends StatelessWidget {
             },
             child: Text(
               '+',
-              style: TextStyle(fontSize: 26,color: Styles.primaryWhiteColor),
+              style: TextStyle(fontSize: 26, color: Styles.primaryWhiteColor),
             ),
           ),
         ),
@@ -99,3 +144,30 @@ class IncomeTab extends StatelessWidget {
   }
 }
 
+class IncomeListWidget extends StatelessWidget {
+  final List<Income> incomeList;
+
+  IncomeListWidget({required this.incomeList});
+
+  @override
+  Widget build(BuildContext context) {
+    if (incomeList.isEmpty) {
+      return Text("No income data found.");
+    } else {
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: incomeList.length,
+        itemBuilder: (context, index) {
+          Income income = incomeList[index];
+          return ListTile(
+           
+            title: Text(income.category),
+            subtitle: Text(income.amount.toStringAsFixed(2)),
+            trailing: Text(income.createdAt),
+          );
+        },
+      );
+    }
+  }
+}
