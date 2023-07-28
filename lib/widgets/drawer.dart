@@ -8,11 +8,7 @@ import 'package:patofy/constants/colors.dart';
 import 'package:patofy/screens/pages/about.dart';
 import 'package:patofy/screens/pages/privacy.dart';
 import '../helpers/export_income.dart';
-import '../model/epenses_model.dart';
-import '../model/income_model.dart';
 import '../screens/auth/signin.dart';
-import '../services/income_services.dart';
-import '../services/expenses_services.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -110,6 +106,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 buildSectionHeader('Synchronization'),
                 buildListTile(Icons.add_box, 'Dropbox', () {
                   // Handle Dropbox tap
+                   // Show the danger alert dialog
+                showDangerAlert(context);
                 }),
                 buildListTile(Icons.add_to_drive, 'Google Drive', () {
                   // Handle Google Drive tap
@@ -222,20 +220,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 icon: Icon(Icons.picture_as_pdf_sharp, color: Styles.primaryRedColor),
                 label: Text('Export to Pdf', style: TextStyle(color: Styles.primaryBlackColor)),
               ),
+              
               const SizedBox(height: 12.0),
               ElevatedButton.icon(
-                onPressed: () {
-                  // Handle share via WhatsApp action
+                onPressed: () async{
+                  // Handle share export csv action
                   Navigator.pop(context);
-                },
-                icon: Icon(Icons.file_copy, color: Styles.primaryRedColor),
-                label: Text('Export to Excel', style: TextStyle(color: Styles.primaryBlackColor)),
-              ),
-              const SizedBox(height: 12.0),
-              ElevatedButton.icon(
-                onPressed: () {
-                  // Handle share via Bluetooth action
-                  Navigator.pop(context);
+                  await exportController.exportToCSV();
+
                 },
                 icon: Icon(Icons.file_present, color: Styles.primaryRedColor),
                 label: Text('Export to Csv', style: TextStyle(color: Styles.primaryBlackColor)),
@@ -246,4 +238,33 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       },
     );
   }
+
+  void showDangerAlert(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Row(
+          children: [
+            Icon(Icons.dangerous, color: Colors.red,size: 25),
+            SizedBox(width: 8),
+          ],
+        ),
+        content: Text(
+          'Sorry, this function is currently not supported. Please use Google Drive.',
+          style: TextStyle(color: Styles.primaryBlackColor),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Thanks', style: TextStyle(color: Styles.primaryBlackColor)),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 }

@@ -1,15 +1,11 @@
-
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class ChartModel {
-
-//Bar chart data here
-
-  List<charts.Series<UserExpenses, String>> generateBarChart() {
+  Future<List<charts.Series<UserExpenses, String>>> generateBarChart() async {
     final data = [
       UserExpenses('Clothes', 200,  charts.MaterialPalette.blue.shadeDefault ,'Clothes'),
       UserExpenses('Transport', 350, charts.MaterialPalette.green.shadeDefault ,'Transport'),
-       UserExpenses('Food', 350, charts.MaterialPalette.black ,'Food'),
+      UserExpenses('Food', 350, charts.MaterialPalette.black ,'Food'),
       UserExpenses('Debt', 150, charts.MaterialPalette.red.shadeDefault ,'Debt'),
     ];
 
@@ -19,19 +15,18 @@ class ChartModel {
         domainFn: (UserExpenses expenses, _) => expenses.category,
         measureFn: (UserExpenses expenses, _) => expenses.amount,
         data: data,
-       colorFn: (UserExpenses expenses, _) => expenses.color,
+        colorFn: (UserExpenses expenses, _) => expenses.color,
         labelAccessorFn: (UserExpenses expenses, _) =>
             '\$${expenses.amount.toStringAsFixed(2)}',
       ),
     ];
   }
 
-
-  Map<String, int> generatePieChart() {
+  Future<Map<String, double>> generatePieChart() async {
     final data = {
-      'Salary': 5000,
-      'Freelancing': 2000,
-      'Investments': 1000,
+      'Salary': 5000.0,
+      'Freelancing': 2000.0,
+      'Investments': 1000.0,
     };
 
     return data;

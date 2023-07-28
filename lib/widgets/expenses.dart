@@ -7,7 +7,7 @@ import '../services/expenses_services.dart';
 import 'add_expenses_widget.dart';
 
 class ExpensesTab extends StatefulWidget {
-  const ExpensesTab({super.key});
+  const ExpensesTab({super.key, required String sortingOption});
 
   @override
   State<ExpensesTab> createState() => _ExpensesTabState();

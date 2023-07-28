@@ -7,7 +7,8 @@ import 'add_income_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class IncomeTab extends StatefulWidget {
-  const IncomeTab({Key? key}) : super(key: key);
+final String sortingOption; 
+  const IncomeTab({Key? key, required this.sortingOption}) : super(key: key);
 
   @override
   _IncomeTabState createState() => _IncomeTabState();
@@ -16,6 +17,8 @@ class IncomeTab extends StatefulWidget {
 class _IncomeTabState extends State<IncomeTab> {
   String actualIncomeAmount = "0.00"; // Initialize with a default value
   List<Income> incomeList = []; // Initialize an empty list to store income data
+
+final String _sortingOption = 'Day';
 
   @override
   void initState() {
@@ -35,15 +38,49 @@ class _IncomeTabState extends State<IncomeTab> {
       // Calculate the total income amount
       for (Income income in fetchedIncomeList) {
         totalIncomeAmount += income.amount;
+
+       if (_sortingOption == 'Day') {
+          // Filter incomes for the current day
+          DateTime createdAtDate = DateTime.parse(income.createdAt);
+          DateTime now = DateTime.now();
+          if (createdAtDate.year == now.year && createdAtDate.month == now.month && createdAtDate.day == now.day) {
+            incomeList.add(income);
+          }
+        }
       }
 
-      // Update the state with the actual income amount and income data
-      setState(() {
-        actualIncomeAmount = totalIncomeAmount.toStringAsFixed(2);
-        incomeList = fetchedIncomeList;
-      });
-    }
+      // Sort the income data based on the selected sorting option
+      fetchedIncomeList = sortIncomeData(fetchedIncomeList, _sortingOption);
+
+    // Update the state with the actual income amount and sorted income data
+    setState(() {
+      actualIncomeAmount = totalIncomeAmount.toStringAsFixed(2);
+      incomeList = fetchedIncomeList;
+    });
   }
+}
+
+ // Method to sort the income data based on the selected sorting option
+  List<Income> sortIncomeData(List<Income> incomeList, String sortingOption) {
+    switch (sortingOption) {
+      case 'Day':
+        break;
+      case 'Week':
+        // Implement sorting by week
+        break;
+      case 'Month':
+        // Implement sorting by month
+        break;
+      case 'Year':
+        // Implement sorting by year
+        break;
+      default:
+        break;
+    }
+    return incomeList;
+  }
+
+
 
   @override
   Widget build(BuildContext context) {

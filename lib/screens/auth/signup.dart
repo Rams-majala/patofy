@@ -7,6 +7,9 @@ import 'package:patofy/screens/auth/otp.dart';
 import 'package:patofy/screens/auth/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../services/auth_controllers.dart';
+import '../home_screen.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -25,6 +28,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+
+
+  final AuthController _authController = AuthController();
 
   bool _agreeToTerms = false;
   bool _isSigningUp = false; // New variable to track signup process
@@ -226,6 +232,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
+void _handleGoogleSignIn() async {
+  User? user = await _authController.googleSignIn();
+  if (user != null) {
+    // User signed in with Google successfully
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HomeScreen()), 
+      // Replace HomePage with the name of your home screen widget
+    );
+  } else {
+    // Google Sign-In failed
+    // Handle the case when the user cancels the sign-in or there's an error.
+  }
+}
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -367,9 +390,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       });
                     },
                   ),
-                  Text(
-                    'I agree to the terms and conditions',
-                    style: TextStyle(color: Colors.blue.shade800),
+                  TextButton(
+                    onPressed: _showTermsAndConditions,
+                    child: Text(
+                      'I agree to the terms and conditions',
+                      style: TextStyle(color: Colors.blue.shade800),
+                    ),
                   ),
                 ],
               ),
@@ -416,10 +442,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: () {
-                      // Handle Google signup
-                      // _authController.googleSignIn();
-                    },
+                    onPressed:_handleGoogleSignIn,
+                   
                     icon: const Icon(Icons.g_translate),
                   ),
                   IconButton(
@@ -454,6 +478,66 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showTermsAndConditions (){
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Terms and Conditions"),
+          content: SingleChildScrollView(
+            child: Text(
+              // Replace the 'terms and conditions text' with the actual terms and conditions content
+              '''TERMS AND CONDITIONS
+
+Please read these Terms and Conditions carefully before using our app.
+
+1. Agreement
+By accessing or using the app, you agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree with any part of these Terms and Conditions, you must not use the app.
+
+2. Intellectual Property
+The app and all of its content, features, and functionality are owned by us and are protected by international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.
+
+3. User Accounts
+You may be required to create an account to use certain features of the app. You are responsible for maintaining the confidentiality of your account and password and for restricting access to your device. You agree to accept responsibility for all activities that occur under your account.
+
+4. Content
+You are solely responsible for the content you submit or display on the app. By using the app, you grant us a worldwide, non-exclusive, royalty-free, sublicensable, and transferable license to use, reproduce, distribute, prepare derivative works of, display, and perform the content.
+
+5. Prohibited Uses
+You agree not to use the app for any unlawful or prohibited purpose, including but not limited to:
+- Violating any applicable law or regulation.
+- Engaging in any activity that disrupts or interferes with the app or its servers.
+- Attempting to gain unauthorized access to any portion of the app or any other systems or networks connected to the app.
+
+6. Disclaimer
+The app is provided on an "as is" and "as available" basis. We make no representations or warranties of any kind, express or implied, regarding the app's operation or content.
+
+7. Limitation of Liability
+We shall not be liable for any direct, indirect, incidental, consequential, or punitive damages arising out of or in connection with the use or inability to use the app.
+
+8. Modifications
+We reserve the right to modify these Terms and Conditions at any time. Your continued use of the app after any such changes shall constitute your consent to such changes.
+
+9. Governing Law
+These Terms and Conditions shall be governed by and construed in accordance with the laws of your country.
+
+If you have any questions or concerns regarding these Terms and Conditions,''',
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Close"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
