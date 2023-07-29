@@ -76,7 +76,7 @@ class _ExpensesTabState extends State<ExpensesTab> {
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
                             child: Text(
-                              "Your Income",
+                              "Your Expenses",
                               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                             ),
                           ),
@@ -87,10 +87,10 @@ class _ExpensesTabState extends State<ExpensesTab> {
                               children: [
                                 Column(
                                   children: [
-                                    Text("Actual"),
+                                    const Text("Actual"),
                                     Text(
                                       actualExpenseAmount,
-                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
@@ -131,7 +131,7 @@ class _ExpensesTabState extends State<ExpensesTab> {
             backgroundColor: Styles.primaryRedColor,
             onPressed: () {
               // Handle the add new button press here
-              Navigator.push(context, MaterialPageRoute(builder: (_) =>  AddExpensesWidget()));
+              Navigator.push(context, MaterialPageRoute(builder: (_) =>  const AddExpensesWidget()));
             },
             child: Text(
               '+',
@@ -147,16 +147,20 @@ class _ExpensesTabState extends State<ExpensesTab> {
 class ExpenseListWidget extends StatelessWidget {
   final List<Expense> expenseList;
 
-  ExpenseListWidget({required this.expenseList});
+  const ExpenseListWidget({super.key, required this.expenseList});
 
   @override
   Widget build(BuildContext context) {
     if (expenseList.isEmpty) {
-      return Text("No income data found.");
+      return Center(
+        child: CircularProgressIndicator(
+          color: Styles.primaryRedColor,
+        ),
+      );
     } else {
       return ListView.builder(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: expenseList.length,
         itemBuilder: (context, index) {
           Expense expense = expenseList[index];

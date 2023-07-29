@@ -2,16 +2,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:patofy/screens/auth/otp.dart';
 import '../constants/colors.dart';
 import 'auth/signin.dart';
-import 'auth/signup.dart';
 import 'home_screen.dart'; // Replace with your home screen file
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SplashScreenState createState() => _SplashScreenState();
 }
 
@@ -28,13 +27,13 @@ class _SplashScreenState extends State<SplashScreen> {
           // User is logged in, navigate to home screen
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => HomeScreen()), // Replace with your home screen
+            MaterialPageRoute(builder: (_) => const HomeScreen()), // Replace with your home screen
           );
         } else {
           // User is not logged in or data not available, navigate to signin screen
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => SignInScreen()),
+            MaterialPageRoute(builder: (_) => const SignInScreen()),
           );
         }
       },

@@ -19,10 +19,11 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Settings',style: TextStyle(color: Styles.primaryRedColor,fontWeight: FontWeight.w800),),
-        iconTheme: IconThemeData(color: Styles.primaryWhiteColor,),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Settings',style: TextStyle(color: Styles.primaryRedColor,fontWeight: FontWeight.w800),),
+      //   iconTheme: IconThemeData(color: Colors.transparent,),
+      //   backgroundColor: Styles.primaryWhiteColor,
+      // ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
@@ -104,7 +105,7 @@ class _SettingPageState extends State<SettingPage> {
             subtitle: const Text('Password'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) => ResetPasswordPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const ResetPasswordPage()));
             },
           ),
           ListTile(

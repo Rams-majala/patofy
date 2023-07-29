@@ -9,9 +9,8 @@ class FirestoreService {
   Future<void> addIncome(Income income) async {
     try {
       await _firestore.collection('incomes').add(income.toFirestore());
-      print("Income data added successfully");
+    // ignore: empty_catches
     } catch (e) {
-      print("Error adding income data: $e");
     }
   }
 
@@ -29,9 +28,8 @@ class FirestoreService {
 
       incomeList = snapshot.docs.map((doc) => Income.fromFirestore(doc)).toList();
 
-      print("income data received");
+    // ignore: empty_catches
     } catch (e) {
-      print('Error getting income data for user: $e');
     }
 
     return incomeList;

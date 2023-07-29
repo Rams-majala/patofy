@@ -1,20 +1,16 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChartModel {
   Future<List<charts.Series<UserExpenses, String>>> generateBarChart() async {
-    final data = [
-      UserExpenses('Clothes', 200,  charts.MaterialPalette.blue.shadeDefault ,'Clothes'),
-      UserExpenses('Transport', 350, charts.MaterialPalette.green.shadeDefault ,'Transport'),
-      UserExpenses('Food', 350, charts.MaterialPalette.black ,'Food'),
-      UserExpenses('Debt', 150, charts.MaterialPalette.red.shadeDefault ,'Debt'),
-    ];
+    final List<UserExpenses> expensesData = await fetchExpensesDataFromFirestore();
 
     return [
       charts.Series<UserExpenses, String>(
         id: 'Expenses',
         domainFn: (UserExpenses expenses, _) => expenses.category,
         measureFn: (UserExpenses expenses, _) => expenses.amount,
-        data: data,
+        data: expensesData,
         colorFn: (UserExpenses expenses, _) => expenses.color,
         labelAccessorFn: (UserExpenses expenses, _) =>
             '\$${expenses.amount.toStringAsFixed(2)}',
@@ -22,14 +18,41 @@ class ChartModel {
     ];
   }
 
-  Future<Map<String, double>> generatePieChart() async {
-    final data = {
-      'Salary': 5000.0,
-      'Freelancing': 2000.0,
-      'Investments': 1000.0,
-    };
+  Future<List<UserExpenses>> fetchExpensesDataFromFirestore() async {
+    // Replace 'your_collection_name' with the actual name of your expenses collection in Firestore
+    final QuerySnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance.collection('expenses').get();
+
+    return snapshot.docs.map((doc) {
+      final String category = doc['categories'];
+      final double amount = doc['amount'].toDouble();
+
+      // You can also get the 'color' and 'domain' properties from Firestore if you store them there
+      return UserExpenses(category, amount, charts.MaterialPalette.blue.shadeDefault, category);
+    }).toList();
+  }
+
+ Future<Map<String, double>> generatePieChart() async {
+    final List<IncomeData> incomesData = await fetchIncomesDataFromFirestore();
+
+    final Map<String, double> data = {};
+    incomesData.forEach((income) {
+      data[income.source] = income.amount;
+    });
 
     return data;
+  }
+
+  Future<List<IncomeData>> fetchIncomesDataFromFirestore() async {
+    final QuerySnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance.collection('expenses').get();
+
+    return snapshot.docs.map((doc) {
+      final String category= doc['categories'];
+      final double amount = doc['amount'].toDouble();
+
+      return IncomeData(category, amount);
+    }).toList();
   }
 }
 

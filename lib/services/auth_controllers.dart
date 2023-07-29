@@ -17,8 +17,8 @@ class AuthController {
         final UserCredential userCredential = await _firebaseAuth.signInWithCredential(credential);
         return userCredential.user;
       }
+    // ignore: empty_catches
     } catch (e) {
-      print("Google Sign-In Error: $e");
     }
     return null;
   }

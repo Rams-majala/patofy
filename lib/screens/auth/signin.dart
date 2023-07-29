@@ -54,7 +54,7 @@ class _SignInScreenState extends State<SignInScreen> {
         _isSigningIn = false; // Set _isSigningIn back to false after successful sign-in
       });
         // Navigate to the home screen if login is successful
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
       }
     } catch (e) {
       pswError ="Invalid email or password.try again";
@@ -102,7 +102,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     controller: _emailController,
                     decoration: InputDecoration(
                       labelText: 'Email',
-                      border: UnderlineInputBorder(),
+                      border: const UnderlineInputBorder(),
                       errorText: emailError,
                     ),
                   ),
@@ -157,7 +157,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (_) => SignUpScreen()),
+                          MaterialPageRoute(builder: (_) => const SignUpScreen()),
                         );
                       },
                       child: const Text("Sign Up"),

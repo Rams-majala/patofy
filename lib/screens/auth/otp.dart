@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
 import 'package:patofy/screens/auth/signin.dart';
-import 'package:patofy/screens/auth/signup.dart';
 
 class OtpScreen extends StatefulWidget {
   
@@ -81,7 +79,7 @@ class _OtpScreenState extends State<OtpScreen> {
       // Check if the user is not null and their email is verified
       if (user != null && user.emailVerified) {
         // User's email is verified, auto redirect to SignInScreen
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => SignInScreen()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const SignInScreen()));
       }
     });
   }
@@ -97,21 +95,21 @@ class _OtpScreenState extends State<OtpScreen> {
                     size: 180,
                     color: Styles.primaryRedColor,
                   ),
-                  SizedBox(height: 24),
-                  Text(
+                  const SizedBox(height: 24),
+                  const Text(
                     'Verify your email address',
                     style: TextStyle(fontSize: 25),
                     textAlign: TextAlign.center,
                   ),
-                  Center(
+                  const Center(
                     child: Text(
                       'we have just sent email verification link on your email.Please check the email and click on that link to verify your email address',
                       style: TextStyle(fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(height: 24),
-                 Center(
+                  const SizedBox(height: 24),
+                 const Center(
                     child: Text(
                       'if not auto redirected after verification,click resend email link'
                       ,
@@ -120,12 +118,12 @@ class _OtpScreenState extends State<OtpScreen> {
                     ),
                   ),
                   
-                  SizedBox(height: 10),
-                  TextButton(onPressed: (){}, child: Text("Resend Email ink")),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 10),
+                  TextButton(onPressed: (){}, child: const Text("Resend Email ink")),
+                  const SizedBox(height: 5),
                   TextButton(onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (_)=>SignInScreen()));
-                  }, child: Text("back to login"))
+                    Navigator.push(context, MaterialPageRoute(builder: (_)=>const SignInScreen()));
+                  }, child: const Text("back to login"))
                 ],
               ),
       ),

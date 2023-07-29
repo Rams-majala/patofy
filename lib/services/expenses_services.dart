@@ -15,7 +15,6 @@ class ExpenseFirestoreService {
     }
   }
 
-
 //get expenses from the firestore firebase with the user id.
 
   Future<List<Expense>> getExpensesForUser(String userId) async {
@@ -27,7 +26,8 @@ class ExpenseFirestoreService {
           .where('userId', isEqualTo: userId)
           .get();
 
-      expensList = snapshot.docs.map((doc) => Expense.fromFirestore(doc)).toList();
+      expensList =
+          snapshot.docs.map((doc) => Expense.fromFirestore(doc)).toList();
 
       print("Expenses data received");
     } catch (e) {
@@ -37,12 +37,13 @@ class ExpenseFirestoreService {
     return expensList;
   }
 
-   // Add the method to get the stream of expenses data for a specific user
+  // Add the method to get the stream of expenses data for a specific user
   Stream<List<Expense>> streamExpensesForUser(String userId) {
     return _firestore
         .collectionGroup('expenses')
         .where('userId', isEqualTo: userId)
         .snapshots()
-        .map((snapshot) => snapshot.docs.map((doc) => Expense.fromFirestore(doc)).toList());
+        .map((snapshot) =>
+            snapshot.docs.map((doc) => Expense.fromFirestore(doc)).toList());
   }
 }

@@ -35,7 +35,7 @@ class _CategoryPageState extends State<CategoryPage> {
         backgroundColor: Styles.primaryRedColor,
         iconTheme: IconThemeData(color: Styles.primaryWhiteColor),
         title: Text(
-          "Select Income Categories",
+          "Select Expenses Categories",
           style: TextStyle(color: Styles.primaryWhiteColor),
         ),
         centerTitle: true,

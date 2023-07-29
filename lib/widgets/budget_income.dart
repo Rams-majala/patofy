@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
 
@@ -7,67 +9,136 @@ class BudgetedIncomeTab extends StatefulWidget {
   const BudgetedIncomeTab({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _BudgetedIncomeTabState createState() => _BudgetedIncomeTabState();
 }
 
 class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
-  List<TableRow> tableRows = [
-    // Existing rows in the table
-    const TableRow(
-      children: [
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('Category 1'),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('Amount 1'),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('Description 1'),
-        ),
-      ],
-    ),
-    const TableRow(
-      children: [
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('Category 2'),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('Amount 2'),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('Description 2'),
-        ),
-      ],
-    ),
-  ];
+  String selectedDuration = '';
+  List<TableRow> tableRows = [];
+
+  Map<String, double> expensesByCategory = {};
+
+  void fetchDataBasedOnDuration(String duration) async {
+    try {
+      // Get the current user from Firebase Authentication
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        String userId = user.uid; // Get the authenticated user's ID
+
+        // Construct the Firestore collection path based on the user ID and the appropriate collection name
+        String collectionPath =
+            'users/$userId/expenses'; // Change 'expenses' to the appropriate collection name where you store the data
+
+        // Fetch data from Firestore
+        QuerySnapshot querySnapshot =
+            await FirebaseFirestore.instance.collection(collectionPath).get();
+
+        // Filter the fetched data based on the selected duration
+        DateTime currentDate = DateTime.now();
+        DateTime startDate;
+        if (duration == '1 Month') {
+          startDate = DateTime(currentDate.year, currentDate.month, 1);
+        } else if (duration == '3 Months') {
+          startDate = DateTime(currentDate.year, currentDate.month - 2, 1);
+        } else if (duration == '6 Months') {
+          startDate = DateTime(currentDate.year, currentDate.month - 5, 1);
+        } else if (duration == '12 Months') {
+          startDate = DateTime(currentDate.year - 1, currentDate.month, 1);
+        } else {
+          // Invalid duration, do something or show an error message
+          return;
+        }
+
+        Map<String, double> expensesByCategory = {};
+        for (var doc in querySnapshot.docs) {
+          double amount = doc['amount'] ?? 0.0;
+          String category = doc['category'] ?? 'Unknown';
+          DateTime createdAt = doc['createdAt'].toDate();
+          if (createdAt.isAfter(startDate)) {
+            if (expensesByCategory.containsKey(category)) {
+              expensesByCategory[category] =
+                  expensesByCategory[category]! + amount;
+            } else {
+              expensesByCategory[category] = amount;
+            }
+          }
+        }
+
+        // Now you have the total expenses for each category within the selected duration in the 'expensesByCategory' map.
+
+        // Update the table with the fetched data
+        // expensesByCategory.forEach((category, totalAmount) {
+        //   expenseRows.add(
+        //     TableRow(
+        //       children: [
+        //         Padding(
+        //           padding: const EdgeInsets.all(8.0),
+        //           child: Text(category),
+        //         ),
+        //         Padding(
+        //           padding: const EdgeInsets.all(8.0),
+        //           child: Text(totalAmount.toStringAsFixed(2)), // Display the total amount rounded to 2 decimal places
+        //         ),
+        //         const Padding(
+        //           padding: EdgeInsets.all(8.0),
+        //           child: Text(''), // Placeholder for description (if required)
+        //         ),
+        //       ],
+        //     ),
+        //   );
+        // });
+
+        // setState(() {
+        //   tableRows = expenseRows;
+        // });
+
+        // Display a Snackbar to inform the user that data has been fetched.
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Wait while we prepared your $duration expense budget"),
+        ));
+      } else {
+        // User is not authenticated or the authentication token has expired.
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("User not authenticated. Please log in."),
+        ));
+      }
+    } catch (error) {
+      // Handle any errors that might occur during fetching data.
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Error fetching data. Please try again later."),
+      ));
+    }
+  }
 
   void addTableRow() {
-    setState(() {
-      // Add a new row to the table
-      tableRows.add(
-        const TableRow(
+    List<TableRow> expenseRows = [];
+    expensesByCategory.forEach((category, totalAmount) {
+      expenseRows.add(
+        TableRow(
           children: [
             Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('New Category'),
+              padding: const EdgeInsets.all(8.0),
+              child: Text(category),
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('New Amount'),
+              padding: const EdgeInsets.all(8.0),
+              child: Text(totalAmount.toStringAsFixed(
+                  2)), // Display the total amount rounded to 2 decimal places
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(8.0),
-              child: Text('New Description'),
+              child: Text(''), // Placeholder for description (if required)
             ),
           ],
         ),
       );
+    });
+
+    setState(() {
+      tableRows = expenseRows;
     });
   }
 
@@ -96,40 +167,91 @@ class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Radio(
-                      value: '1 Month',
-                      groupValue: null, // Add your group value here
-                      onChanged: (value) {
-                        // Handle radio button selection
-                      },
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Material(
+                        child: ActionChip(
+                          label: const Text('1 Month'),
+                          onPressed: () {
+                            setState(() {
+                              selectedDuration = '1 Month';
+                            });
+                            fetchDataBasedOnDuration('1 Month');
+                          },
+                          backgroundColor: selectedDuration == '1 Month'
+                              ? Styles.primaryBlackColor
+                              : null,
+                          labelStyle: TextStyle(
+                            color: selectedDuration == '1 Month'
+                                ? Styles.primaryWhiteColor
+                                : Styles.primaryBlackColor,
+                          ),
+                        ),
+                      ),
                     ),
-                    const Text('1 Month'),
-                    Radio(
-                      value: '3 Months',
-                      groupValue: null, // Add your group value here
-                      onChanged: (value) {
-                        // Handle radio button selection
-                      },
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ActionChip(
+                        label: const Text('3 Months'),
+                        onPressed: () {
+                          setState(() {
+                            selectedDuration = '3 Months';
+                          });
+                          fetchDataBasedOnDuration('3 Month');
+                        },
+                        backgroundColor: selectedDuration == '3 Months'
+                            ? Styles.primaryBlackColor
+                            : null,
+                        labelStyle: TextStyle(
+                          color: selectedDuration == '3 Months'
+                              ? Styles.primaryWhiteColor
+                              : Styles.primaryBlackColor,
+                        ),
+                      ),
                     ),
-                    const Text('3 Months'),
-                    Radio(
-                      value: '6 Months',
-                      groupValue: null, // Add your group value here
-                      onChanged: (value) {
-                        // Handle radio button selection
-                      },
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ActionChip(
+                        label: const Text('6 Months'),
+                        onPressed: () {
+                          setState(() {
+                            selectedDuration = '6 Months';
+                          });
+                          fetchDataBasedOnDuration('6 Month');
+                        },
+                        backgroundColor: selectedDuration == '6 Months'
+                            ? Styles.primaryBlackColor
+                            : null,
+                        labelStyle: TextStyle(
+                          color: selectedDuration == '6 Months'
+                              ? Styles.primaryWhiteColor
+                              : Styles.primaryBlackColor,
+                        ),
+                      ),
                     ),
-                    const Text('6 Months'),
-                    Radio(
-                      value: '12 Months',
-                      groupValue: null, // Add your group value here
-                      onChanged: (value) {
-                        // Handle radio button selection
-                      },
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ActionChip(
+                        label: const Text('12 Months'),
+                        onPressed: () {
+                          setState(() {
+                            selectedDuration = '12 Months';
+                          });
+                          fetchDataBasedOnDuration('12 Month');
+                        },
+                        backgroundColor: selectedDuration == '12 Months'
+                            ? Styles.primaryBlackColor
+                            : null,
+                        labelStyle: TextStyle(
+                          color: selectedDuration == '12 Months'
+                              ? Styles.primaryWhiteColor
+                              : Styles.primaryBlackColor,
+                        ),
+                      ),
                     ),
-                    const Text('12 Months'),
                   ],
                 ),
               ),
@@ -220,7 +342,7 @@ class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Styles.primaryRedColor,
                             ),
-                            child:  Text(
+                            child: Text(
                               'Add',
                               style: TextStyle(
                                 color: Styles.primaryWhiteColor,
@@ -234,22 +356,26 @@ class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
                 ),
               ),
               const SizedBox(height: 10.0),
-            GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_)=> const HomeScreen()));
-              },
-              child: Container(
-                height: 40,
-                width: MediaQuery.of(context).size.width * 0.6,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Styles.primaryRedColor
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const HomeScreen()));
+                },
+                child: Container(
+                  height: 40,
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Styles.primaryRedColor),
+                  child: Center(
+                    child: Text(
+                      "Finish",
+                      style: TextStyle(
+                          color: Styles.primaryWhiteColor, fontSize: 18),
+                    ),
+                  ),
                 ),
-                child: Center(
-                  child: Text("Finish",style: TextStyle(color: Styles.primaryWhiteColor,fontSize: 18),),
-                ),
-              ),
-            )
+              )
             ],
           ),
         ),
@@ -257,5 +383,3 @@ class _BudgetedIncomeTabState extends State<BudgetedIncomeTab> {
     );
   }
 }
-
-

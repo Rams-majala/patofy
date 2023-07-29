@@ -39,16 +39,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return UserAccountsDrawerHeader(
-                  accountName: Text('Loading...'),
-                  accountEmail: Text(''),
+                  accountName: const Text('Loading...'),
+                  accountEmail: const Text(''),
                   decoration: BoxDecoration(
                     color: Styles.primaryRedColor,
                   ),
                 );
               } else if (snapshot.hasError) {
                 return UserAccountsDrawerHeader(
-                  accountName: Text('Error'),
-                  accountEmail: Text(''),
+                  accountName: const Text('Error'),
+                  accountEmail: const Text(''),
                   decoration: BoxDecoration(
                     color: Styles.primaryRedColor,
                   ),
@@ -98,10 +98,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               padding: EdgeInsets.zero,
               children: [
                 buildListTile(Icons.info, 'About patofy', () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => AboutPage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AboutPage()));
                 }),
                 buildListTile(Icons.privacy_tip, 'Privacy policy', () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => PrivacyPage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const PrivacyPage()));
                 }),
                 buildSectionHeader('Synchronization'),
                 buildListTile(Icons.add_box, 'Dropbox', () {
@@ -110,6 +110,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 showDangerAlert(context);
                 }),
                 buildListTile(Icons.add_to_drive, 'Google Drive', () {
+
+                  handleGoogleDrive();
                   // Handle Google Drive tap
                 }),
                 buildListTile(Icons.backup, 'Data Backup', () {
@@ -118,15 +120,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 buildListTile(Icons.logout, 'Logout', ()async {
                     try {
                       await FirebaseAuth.instance.signOut();
+                      // ignore: use_build_context_synchronously
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => SignInScreen(),
+                          builder: (_) => const SignInScreen(),
                         ),
                       ); // Replace with your login or splash screen route
                     } catch (e) {
                       // Handle error
-                      print('Error occurred during logout: $e');
                     }
                   },),
               ],
@@ -186,7 +188,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   }
 
    void _shareApp() {
-    final String appShareMessage = "Check out this awesome app! Download it now from the Play Store/App Store.";
+    const String appShareMessage = "Check out this awesome app! Download it now from the Play Store/App Store.";
     Share.share(appShareMessage);
   }
 
@@ -262,6 +264,36 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             child: Text('Thanks', style: TextStyle(color: Styles.primaryBlackColor)),
           ),
         ],
+      );
+    },
+  );
+}
+
+void handleGoogleDrive() async{
+  showLoadingAlert(context);
+
+  await Future.delayed(Duration(seconds: 10));
+
+  Navigator.pop(context);
+}
+
+void showLoadingAlert(BuildContext context){
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Row(
+          children: [
+            CircularProgressIndicator(), // Loading indicator
+            SizedBox(width: 8),
+            Text('Please wait...'),
+          ],
+        ),
+        content: Text(
+          'While we authenticate your account.',
+          style: TextStyle(color: Styles.primaryBlackColor),
+        ),
       );
     },
   );

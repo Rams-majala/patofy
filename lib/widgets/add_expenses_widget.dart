@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 import 'package:patofy/services/expenses_services.dart';
-import '../model/epenses_model.dart';
 
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+
+import '../model/epenses_model.dart';
 import 'category_widget.dart';
 
 class AddExpensesWidget extends StatefulWidget {
@@ -21,6 +25,9 @@ class _AddExpensesWidgetState extends State<AddExpensesWidget> {
   User? _currentUser;
 
   List<Category> selectedCategories = []; // Store the selected categories
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
@@ -62,8 +69,32 @@ class _AddExpensesWidgetState extends State<AddExpensesWidget> {
       _amountController.text = "";
       _detailsController.text = "";
 
+      _showNotification('Expense Added', 'You have successfully added an expense.');
+
       Navigator.pop(context);
     });
+  }
+
+  Future<void> _showNotification(String title, String body) async {
+    var androidPlatformChannelSpecifics =const AndroidNotificationDetails(
+      'Congratulations', // Replace 'channel_id' with your own channel ID
+      'You have added the Expenses successfully', // Replace 'channel_name' with your own channel name
+       
+      importance: Importance.high,
+      priority: Priority.high,
+      showWhen: false,
+    );
+    var platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+    );
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platformChannelSpecifics,
+      payload: 'new_expense',
+    );
   }
 
   @override
@@ -72,7 +103,7 @@ class _AddExpensesWidgetState extends State<AddExpensesWidget> {
       appBar: AppBar(
         backgroundColor: Styles.primaryRedColor,
         title: Text(
-          'New Income',
+          'New Expense',
           style: TextStyle(color: Styles.primaryWhiteColor),
         ),
         centerTitle: true,
@@ -155,7 +186,7 @@ class _AddExpensesWidgetState extends State<AddExpensesWidget> {
                   ),
                   child: Center(
                     child: Text(
-                      "Add Income",
+                      "Add Expense",
                       style: TextStyle(color: Styles.primaryWhiteColor),
                     ),
                   ),

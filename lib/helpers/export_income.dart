@@ -110,7 +110,6 @@ class ExportController {
     try {
       User? user = FirebaseAuth.instance.currentUser;
       if (user == null) {
-        print('User not logged in!');
         return;
       }
 
@@ -142,10 +141,8 @@ class ExportController {
       List<int> incomesBytes = await incomesDocument.save();
       incomesDocument.dispose();
       await saveAndLaunchFile(incomesBytes, 'Patofy_Incomes.pdf');
-    } catch (e, stackTrace) {
+    } catch (e) {
       // Handle the error gracefully
-      print('Error exporting to PDF: $e');
-      print('Stack trace: $stackTrace');
     }
   }
   String getCurrentFormattedDate() {
@@ -166,7 +163,6 @@ class ExportController {
     // Get the current user ID from Firebase Auth
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      print('User not logged in!');
       return;
     }
 
@@ -205,6 +201,5 @@ class ExportController {
     final file = File('$path/PatofyData.csv');
     await file.writeAsString(csvContent);
 
-    print('Data exported to CSV successfully!');
   }
 }

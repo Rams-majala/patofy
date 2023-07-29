@@ -11,6 +11,7 @@ final String sortingOption;
   const IncomeTab({Key? key, required this.sortingOption}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _IncomeTabState createState() => _IncomeTabState();
 }
 
@@ -124,10 +125,10 @@ final String _sortingOption = 'Day';
                               children: [
                                 Column(
                                   children: [
-                                    Text("Actual"),
+                                    const Text("Actual"),
                                     Text(
                                       actualIncomeAmount,
-                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
@@ -184,16 +185,19 @@ final String _sortingOption = 'Day';
 class IncomeListWidget extends StatelessWidget {
   final List<Income> incomeList;
 
-  IncomeListWidget({required this.incomeList});
+  const IncomeListWidget({super.key, required this.incomeList});
 
   @override
   Widget build(BuildContext context) {
     if (incomeList.isEmpty) {
-      return Text("No income data found.");
+      return Center(
+        child: CircularProgressIndicator(
+          color: Styles.primaryRedColor,
+        ));
     } else {
       return ListView.builder(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: incomeList.length,
         itemBuilder: (context, index) {
           Income income = incomeList[index];

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 import '../model/income_model.dart';
 import '../services/income_services.dart';

@@ -41,6 +41,7 @@ dependencies:
   csv: ^5.0.2
   google_sign_in: ^6.1.4
   googleapis: ^11.3.0
+  flutter_local_notifications: ^15.1.0+1
 
   
   

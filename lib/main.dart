@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:patofy/screens/splash_screen.dart';
 import 'firebase_options.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'helpers/export_income.dart'; 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,10 +10,8 @@ void main() async {
 
   await _requestPermissions();
 
-  FirebaseApp app = Firebase.app();
-  print('Firebase app name: ${app.options.appId}');
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 Future<void> _requestPermissions() async {

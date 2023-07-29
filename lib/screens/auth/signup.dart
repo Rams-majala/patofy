@@ -14,11 +14,11 @@ class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _formKey = GlobalKey<FormState>();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final TextEditingController _firstNameController = TextEditingController();
@@ -213,18 +213,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
 
 
-      print("Successfully registered. Verification email sent to ${userCredential.user!.email}");
 
       setState(() {
         _isSigningUp = false; // Set _isSigningUp back to false after signup is completed successfully
       });
 
+      // ignore: use_build_context_synchronously
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => OtpScreen()), // Replace OtpScreen with your OTP verification screen
+        MaterialPageRoute(builder: (_) => const OtpScreen()), // Replace OtpScreen with your OTP verification screen
       );
     } catch (e) {
-      print("Error occurred $e");
 
       setState(() {
         _isSigningUp = false; // Set _isSigningUp back to false if an error occurs during signup
@@ -236,9 +235,10 @@ void _handleGoogleSignIn() async {
   User? user = await _authController.googleSignIn();
   if (user != null) {
     // User signed in with Google successfully
+    // ignore: use_build_context_synchronously
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => HomeScreen()), 
+      MaterialPageRoute(builder: (context) => const HomeScreen()), 
       // Replace HomePage with the name of your home screen widget
     );
   } else {
@@ -351,7 +351,7 @@ void _handleGoogleSignIn() async {
                     labelText: 'Password',
                     border: const UnderlineInputBorder(),
                     errorText: _passwordError,
-                    suffixIcon: Icon(Icons.remove_red_eye, size: 16),
+                    suffixIcon: const Icon(Icons.remove_red_eye, size: 16),
                   ),
                   style: TextStyle(
                     color: _passwordError != null ? Colors.red : null,
@@ -366,7 +366,7 @@ void _handleGoogleSignIn() async {
                   controller: _confirmPasswordController,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
-                    suffixIcon: Icon(Icons.remove_red_eye, size: 16),
+                    suffixIcon: const Icon(Icons.remove_red_eye, size: 16),
                     labelText: 'Confirm Password',
                     border: const UnderlineInputBorder(),
                     errorText: _confirmPasswordError,
@@ -466,7 +466,7 @@ void _handleGoogleSignIn() async {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => SignInScreen(),
+                          builder: (_) => const SignInScreen(),
                         ),
                       );
                     },
@@ -486,8 +486,8 @@ void _handleGoogleSignIn() async {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Terms and Conditions"),
-          content: SingleChildScrollView(
+          title: const Text("Terms and Conditions"),
+          content: const SingleChildScrollView(
             child: Text(
               // Replace the 'terms and conditions text' with the actual terms and conditions content
               '''TERMS AND CONDITIONS
@@ -533,7 +533,7 @@ If you have any questions or concerns regarding these Terms and Conditions,''',
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("Close"),
+              child: const Text("Close"),
             ),
           ],
         );

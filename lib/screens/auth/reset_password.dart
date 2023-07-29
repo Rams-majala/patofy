@@ -19,8 +19,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         centerTitle: false,
         backgroundColor: Styles.primaryRedColor,
         leading: IconButton(onPressed: (){
-          Navigator.push(context,MaterialPageRoute(builder: (_)=>HomeScreen()));
-        }, icon: Icon(Icons.arrow_back_ios)),
+          Navigator.push(context,MaterialPageRoute(builder: (_)=>const HomeScreen()));
+        }, icon: const Icon(Icons.arrow_back_ios)),
       ),
     );
   }

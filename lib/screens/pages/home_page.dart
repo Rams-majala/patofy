@@ -1,11 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:patofy/constants/colors.dart';
 // ignore: depend_on_referenced_packages
-import 'package:intl/intl.dart';
 
-import '../../model/epenses_model.dart';
 import '../../widgets/expenses.dart';
 import '../../widgets/income.dart';
 
@@ -23,45 +19,12 @@ class _HomePageState extends State<HomePage>
 
   DateTime startDate = DateTime.now().add(const Duration(days: 1));
 
-  final DateFormat _dateFormatter = DateFormat('MMM dd,yyyy');
 
   late TabController _tabController;
 
   // Sorting state variable
   String _sortingOption = 'Day'; // Default sort option is Day
 
-  Future<void> _fetchata() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      SnackBar(content: Text('you are not loged in to patofy.'));
-      return;
-    }
-
-    String userId = user.uid;
-
-    List<Expense> expenses = [];
-
-    QuerySnapshot sexpensesSnapshot = await FirebaseFirestore.instance
-        .collection('expeses')
-        .where('userId', isEqualTo: userId)
-        .where('createdAt', isGreaterThanOrEqualTo: startDate)
-        .where('createdAt', isLessThan: startDate.add(const Duration(days: 1)))
-        .get();
-
-    expenses = sexpensesSnapshot.docs
-        .map((doc) => Expense.fromFirestore(doc))
-        .toList();
-
-    switch (_sortingOption) {
-      case 'Day':
-        expenses.sort((a, b) => a.createdAt.compareTo(b.createdAt));
-        break;
-      default:
-        // Default sorting by Day
-        expenses.sort((a, b) => a.createdAt.compareTo(b.createdAt));
-        break;
-    }
-  }
 
   @override
   void initState() {
@@ -88,7 +51,7 @@ class _HomePageState extends State<HomePage>
         backgroundColor: Styles.primaryWhiteColor,
         //abb bar design
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.transparent),
+          iconTheme: const IconThemeData(color: Colors.transparent),
           actions: [
             Padding(
               padding: const EdgeInsets.all(4.0),
