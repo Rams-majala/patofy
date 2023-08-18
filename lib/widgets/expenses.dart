@@ -144,14 +144,21 @@ class _ExpensesTabState extends State<ExpensesTab> {
   }
 }
 
-class ExpenseListWidget extends StatelessWidget {
+class ExpenseListWidget extends StatefulWidget {
   final List<Expense> expenseList;
 
   const ExpenseListWidget({super.key, required this.expenseList});
 
   @override
+  State<ExpenseListWidget> createState() => _ExpenseListWidgetState();
+}
+
+class _ExpenseListWidgetState extends State<ExpenseListWidget> {
+
+
+  @override
   Widget build(BuildContext context) {
-    if (expenseList.isEmpty) {
+    if (widget.expenseList.isEmpty) {
       return Center(
         child: CircularProgressIndicator(
           color: Styles.primaryRedColor,
@@ -161,14 +168,17 @@ class ExpenseListWidget extends StatelessWidget {
       return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: expenseList.length,
+        itemCount: widget.expenseList.length,
         itemBuilder: (context, index) {
-          Expense expense = expenseList[index];
+          Expense expense = widget.expenseList[index];
           return ListTile(
-           
-            title: Text(expense.category),
-            subtitle: Text(expense.amount.toStringAsFixed(2)),
-            trailing: Text(expense.createdAt),
+           leading: CircleAvatar(
+            backgroundColor: Styles.primaryRedColor.withOpacity(0.4),
+            child: Text(expense.category.substring(0,1)),
+           ),
+            title: Text(expense.category,style:TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text(expense.createdAt, style: TextStyle(color: Styles.primaryGreenColor),),
+            trailing: Text(expense.amount.toStringAsFixed(2),style: TextStyle(color: Styles.primaryRedColor),),
           );
         },
       );

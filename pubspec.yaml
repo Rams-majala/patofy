@@ -42,6 +42,8 @@ dependencies:
   google_sign_in: ^6.1.4
   googleapis: ^11.3.0
   flutter_local_notifications: ^15.1.0+1
+  file_picker: ^5.0.1
+  googleapis_auth: ^1.4.1
 
   
   

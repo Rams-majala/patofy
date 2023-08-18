@@ -119,7 +119,9 @@ class _OtpScreenState extends State<OtpScreen> {
                   ),
                   
                   const SizedBox(height: 10),
-                  TextButton(onPressed: (){}, child: const Text("Resend Email ink")),
+                  TextButton(
+                    onPressed: resendVerificationLink,
+                   child: const Text("Resend Email ink")),
                   const SizedBox(height: 5),
                   TextButton(onPressed: (){
                     Navigator.push(context, MaterialPageRoute(builder: (_)=>const SignInScreen()));
@@ -129,4 +131,7 @@ class _OtpScreenState extends State<OtpScreen> {
       ),
     );
   }
+   resendVerificationLink() async {
+  await FirebaseAuth.instance.currentUser?.sendEmailVerification();
+}
 }

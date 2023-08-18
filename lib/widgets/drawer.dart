@@ -9,6 +9,8 @@ import 'package:patofy/screens/pages/about.dart';
 import 'package:patofy/screens/pages/privacy.dart';
 import '../helpers/export_income.dart';
 import '../screens/auth/signin.dart';
+import '../screens/pages/backup.dart';
+import '../screens/pages/google_drive.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -111,11 +113,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 }),
                 buildListTile(Icons.add_to_drive, 'Google Drive', () {
 
-                  handleGoogleDrive();
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => GoogleDrivePage()));
                   // Handle Google Drive tap
                 }),
                 buildListTile(Icons.backup, 'Data Backup', () {
                   // Handle Data Backup tap
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => BackupPage()));
                 }),
                 buildListTile(Icons.logout, 'Logout', ()async {
                     try {
@@ -268,35 +271,4 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     },
   );
 }
-
-void handleGoogleDrive() async{
-  showLoadingAlert(context);
-
-  await Future.delayed(Duration(seconds: 10));
-
-  Navigator.pop(context);
-}
-
-void showLoadingAlert(BuildContext context){
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Row(
-          children: [
-            CircularProgressIndicator(), // Loading indicator
-            SizedBox(width: 8),
-            Text('Please wait...'),
-          ],
-        ),
-        content: Text(
-          'While we authenticate your account.',
-          style: TextStyle(color: Styles.primaryBlackColor),
-        ),
-      );
-    },
-  );
-}
-
 }

@@ -202,10 +202,15 @@ class IncomeListWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           Income income = incomeList[index];
           return ListTile(
-           
-            title: Text(income.category),
-            subtitle: Text(income.amount.toStringAsFixed(2)),
-            trailing: Text(income.createdAt),
+           leading: CircleAvatar(
+            backgroundColor: Styles.primaryRedColor.withOpacity(0.4),
+            child:Text(income.category.substring(0,1).toUpperCase()
+            
+            )
+           ),
+            title: Text(income.category,style:TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text(income.createdAt,style:TextStyle(color: Styles.primaryGreenColor)),
+            trailing: Text(income.amount.toStringAsFixed(2),style:TextStyle(color:Styles.primaryGreenColor)),
           );
         },
       );

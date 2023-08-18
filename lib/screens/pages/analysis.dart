@@ -35,7 +35,7 @@ class _AnalysisPageState extends State<AnalysisPage> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return  DefaultTabController(
-       length: 3,
+       length: 2,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Styles.primaryWhiteColor,
@@ -51,53 +51,18 @@ class _AnalysisPageState extends State<AnalysisPage> with SingleTickerProviderSt
                 tabs: const [
                   Tab(text: 'Pi chart'),
                   Tab(text: 'Column'),
-                  Tab(text: 'Line chart'),
+                  //Tab(text: 'Line chart'),
                 ]
               
               ),
         ),
         body:  const TabBarView(
               
-              children: [ PieChartPage(), BarChartPage(),LineChartPage()],
+              children: [ PieChartPage(), BarChartPage(),
+              // LineChartPage()
+              ],
             ),
       ),
     );
   }
 }
-
-// SingleChildScrollView(
-//         scrollDirection: Axis.vertical,
-//         child: Column(
-//           children: [
-//             Container(
-//               height: 90,
-//               width: MediaQuery.of(context).size.width,
-//               color: Styles.primaryBlackColor,
-//             ), 
-//             SizedBox(
-//                 width: MediaQuery.of(context).size.width * 0.9,
-//                 child: PieChart(
-//                   dataMap: pieChartData,
-//                   animationDuration: const Duration(milliseconds: 500),
-//                   chartLegendSpacing: 32.0,
-//                   chartRadius: null,
-                  
-//                   colorList: const [
-//                     Colors.blue,
-//                     Colors.green,
-//                     Colors.orange,
-//                   ],
-//                   legendOptions: const LegendOptions(
-//                     showLegendsInRow: true,
-//                     legendPosition: LegendPosition.bottom,
-//                     showLegends: true,
-//                     legendTextStyle: TextStyle(
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-           
-//           ],
-//         ),
-//       ),

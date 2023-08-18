@@ -36,9 +36,9 @@ class ChartModel {
     final List<IncomeData> incomesData = await fetchIncomesDataFromFirestore();
 
     final Map<String, double> data = {};
-    incomesData.forEach((income) {
+    for (var income in incomesData) {
       data[income.source] = income.amount;
-    });
+    }
 
     return data;
   }
